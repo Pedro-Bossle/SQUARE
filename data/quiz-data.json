@@ -1,0 +1,924 @@
+{
+  "meta": {
+    "title": "SQuaRE Quest",
+    "subtitle": "Auditoria ISO/IEC 25010:2023",
+    "storageKey": "square-quest-v2",
+    "questionsPerStage": 2,
+    "bossQuestions": 5,
+    "pointsPerStageQuestion": 100,
+    "pointsPerBossQuestion": 200
+  },
+  "references": [
+    "ISO/IEC 25010:2023 — Product quality model. International Organization for Standardization (ISO).",
+    "ISO/IEC 25000:2014 — Guide to SQuaRE. International Organization for Standardization (ISO).",
+    "ISO/IEC 25019:2023 — Quality-in-use model. International Organization for Standardization (ISO).",
+    "Material didático da disciplina: Qualidade e Auditoria de Tecnologia da Informação — seção SQuaRE: ISO/IEC 25000.",
+    "ISTQB Certified Tester Advanced Level — Test Analyst Syllabus v4.0 (2025), Apêndice F, apoio terminológico da edição 2023."
+  ],
+  "characteristics": [
+    {
+      "id": "functional",
+      "pt": "Adequação funcional",
+      "en": "Functional suitability",
+      "definition": "Avalia se o produto entrega as funções necessárias e se essas funções produzem resultados corretos e ajudam o usuário a concluir suas tarefas.",
+      "question": "O produto faz aquilo que precisa fazer, corretamente e de forma adequada?",
+      "subs": [
+        {
+          "pt": "Completude funcional",
+          "en": "Functional completeness",
+          "definition": "As funções disponíveis cobrem todas as tarefas e objetivos previstos para os usuários."
+        },
+        {
+          "pt": "Correção funcional",
+          "en": "Functional correctness",
+          "definition": "As funções fornecem resultados corretos e com a precisão esperada."
+        },
+        {
+          "pt": "Adequação funcional",
+          "en": "Functional appropriateness",
+          "definition": "As funções facilitam a realização das tarefas e objetivos, sem etapas desnecessárias."
+        }
+      ]
+    },
+    {
+      "id": "performance",
+      "pt": "Eficiência de desempenho",
+      "en": "Performance efficiency",
+      "definition": "Avalia tempo de resposta, vazão, uso de recursos e limites de capacidade enquanto o produto executa suas funções.",
+      "question": "O produto responde no tempo esperado, usa recursos de forma adequada e suporta a carga necessária?",
+      "subs": [
+        {
+          "pt": "Comportamento no tempo",
+          "en": "Time behaviour",
+          "definition": "Os tempos de resposta, processamento e taxas de transferência atendem aos requisitos."
+        },
+        {
+          "pt": "Utilização de recursos",
+          "en": "Resource utilization",
+          "definition": "CPU, memória, armazenamento, rede, energia e outros recursos são usados dentro dos limites definidos."
+        },
+        {
+          "pt": "Capacidade",
+          "en": "Capacity",
+          "definition": "Os limites máximos do produto, como usuários simultâneos, volume de dados ou transações, atendem à necessidade."
+        }
+      ]
+    },
+    {
+      "id": "compatibility",
+      "pt": "Compatibilidade",
+      "en": "Compatibility",
+      "definition": "Avalia a capacidade de o produto coexistir com outros produtos no mesmo ambiente e trocar informações de forma útil com eles.",
+      "question": "O produto convive e troca informações corretamente com outros sistemas?",
+      "subs": [
+        {
+          "pt": "Coexistência",
+          "en": "Co-existence",
+          "definition": "O produto compartilha ambiente e recursos com outros produtos sem causar impacto prejudicial."
+        },
+        {
+          "pt": "Interoperabilidade",
+          "en": "Interoperability",
+          "definition": "O produto troca informações com outros produtos e consegue utilizar a informação recebida."
+        }
+      ]
+    },
+    {
+      "id": "interaction",
+      "pt": "Capacidade de interação",
+      "en": "Interaction capability",
+      "definition": "Avalia os atributos que permitem a usuários específicos interagir com o produto pela interface para concluir tarefas em diferentes contextos.",
+      "question": "A interação com o produto é compreensível, aprendível, controlável e inclusiva?",
+      "subs": [
+        {
+          "pt": "Reconhecimento de adequação",
+          "en": "Appropriateness recognizability",
+          "definition": "O usuário consegue reconhecer que o produto é adequado às suas necessidades."
+        },
+        {
+          "pt": "Capacidade de aprendizado",
+          "en": "Learnability",
+          "definition": "Usuários conseguem aprender as funções necessárias dentro do tempo esperado."
+        },
+        {
+          "pt": "Operabilidade",
+          "en": "Operability",
+          "definition": "O produto é fácil de operar e controlar."
+        },
+        {
+          "pt": "Proteção contra erros do usuário",
+          "en": "User error protection",
+          "definition": "O produto previne ou reduz erros de operação do usuário."
+        },
+        {
+          "pt": "Envolvimento do usuário",
+          "en": "User engagement",
+          "definition": "A interface apresenta funções e informações de forma convidativa e motivadora."
+        },
+        {
+          "pt": "Inclusão",
+          "en": "Inclusivity",
+          "definition": "O produto pode ser utilizado por pessoas de diferentes origens, culturas, idiomas, idades e situações."
+        },
+        {
+          "pt": "Assistência ao usuário",
+          "en": "User assistance",
+          "definition": "O produto oferece condições para pessoas com ampla variedade de capacidades atingirem seus objetivos, inclusive com recursos de acessibilidade."
+        },
+        {
+          "pt": "Autodescrição",
+          "en": "Self-descriptiveness",
+          "definition": "A própria interface fornece informações suficientes para tornar seu estado, capacidades e uso compreensíveis sem depender excessivamente de ajuda externa."
+        }
+      ]
+    },
+    {
+      "id": "reliability",
+      "pt": "Confiabilidade",
+      "en": "Reliability",
+      "definition": "Avalia se o produto executa suas funções de forma estável pelo período necessário, permanece disponível, tolera falhas e se recupera quando necessário.",
+      "question": "O produto continua funcionando de forma confiável e consegue se recuperar de falhas?",
+      "subs": [
+        {
+          "pt": "Inexistência de falhas",
+          "en": "Faultlessness",
+          "definition": "O produto executa as funções especificadas sem falhas durante a operação normal."
+        },
+        {
+          "pt": "Disponibilidade",
+          "en": "Availability",
+          "definition": "O produto está operacional e acessível quando seu uso é necessário."
+        },
+        {
+          "pt": "Tolerância a falhas",
+          "en": "Fault tolerance",
+          "definition": "O produto continua operando como previsto mesmo quando ocorrem falhas de hardware ou software."
+        },
+        {
+          "pt": "Recuperabilidade",
+          "en": "Recoverability",
+          "definition": "Após uma interrupção ou falha, o produto recupera dados afetados e restabelece o estado desejado."
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "pt": "Segurança da informação",
+      "en": "Security",
+      "definition": "Avalia a proteção contra ataques e o controle apropriado de acesso, alteração, autoria e rastreabilidade de dados e operações.",
+      "question": "Dados, identidades e operações estão protegidos contra acesso, alteração e ataques indevidos?",
+      "subs": [
+        {
+          "pt": "Confidencialidade",
+          "en": "Confidentiality",
+          "definition": "Dados ficam acessíveis apenas às pessoas, produtos ou sistemas autorizados."
+        },
+        {
+          "pt": "Integridade",
+          "en": "Integrity",
+          "definition": "Dados e estado do sistema ficam protegidos contra alteração ou exclusão não autorizada ou acidental."
+        },
+        {
+          "pt": "Não repúdio",
+          "en": "Non-repudiation",
+          "definition": "Existem evidências de que uma ação ou evento ocorreu, impedindo que seja negado posteriormente."
+        },
+        {
+          "pt": "Responsabilização",
+          "en": "Accountability",
+          "definition": "As ações podem ser rastreadas de forma única até a entidade responsável."
+        },
+        {
+          "pt": "Autenticidade",
+          "en": "Authenticity",
+          "definition": "É possível comprovar que a identidade de uma pessoa, serviço ou recurso é realmente a identidade alegada."
+        },
+        {
+          "pt": "Resistência",
+          "en": "Resistance",
+          "definition": "O produto mantém operações essenciais enquanto está sob ataque de um agente malicioso."
+        }
+      ]
+    },
+    {
+      "id": "maintainability",
+      "pt": "Manutenibilidade",
+      "en": "Maintainability",
+      "definition": "Avalia a eficácia e eficiência para compreender, modificar, corrigir, evoluir e testar o produto.",
+      "question": "O produto pode ser analisado, alterado e testado sem gerar impactos desnecessários?",
+      "subs": [
+        {
+          "pt": "Modularidade",
+          "en": "Modularity",
+          "definition": "O produto é dividido em componentes de modo que alterações locais tenham pouco impacto nos demais."
+        },
+        {
+          "pt": "Reutilização",
+          "en": "Reusability",
+          "definition": "Partes do produto podem ser reutilizadas em outros sistemas ou na construção de novos ativos."
+        },
+        {
+          "pt": "Capacidade de análise",
+          "en": "Analysability",
+          "definition": "É possível avaliar impactos de mudanças, localizar causas de falhas e identificar o que precisa ser modificado."
+        },
+        {
+          "pt": "Modificabilidade",
+          "en": "Modifiability",
+          "definition": "Mudanças podem ser feitas de forma eficaz sem introduzir defeitos nem degradar a qualidade existente."
+        },
+        {
+          "pt": "Testabilidade",
+          "en": "Testability",
+          "definition": "Critérios de teste podem ser definidos e os testes executados de forma eficaz para verificar se foram atendidos."
+        }
+      ]
+    },
+    {
+      "id": "flexibility",
+      "pt": "Flexibilidade",
+      "en": "Flexibility",
+      "definition": "Avalia a capacidade do produto de se adaptar a mudanças de requisitos, contextos de uso e ambientes de sistema.",
+      "question": "O produto consegue se adaptar, escalar, ser instalado e substituir soluções em ambientes diferentes?",
+      "subs": [
+        {
+          "pt": "Adaptabilidade",
+          "en": "Adaptability",
+          "definition": "O produto pode ser adaptado ou transferido para diferentes ambientes de hardware, software ou uso."
+        },
+        {
+          "pt": "Escalabilidade",
+          "en": "Scalability",
+          "definition": "O produto lida com aumento ou redução de carga e adapta sua capacidade à variabilidade."
+        },
+        {
+          "pt": "Instalabilidade",
+          "en": "Installability",
+          "definition": "O produto pode ser instalado e removido com eficácia e eficiência no ambiente especificado."
+        },
+        {
+          "pt": "Substituibilidade",
+          "en": "Replaceability",
+          "definition": "O produto pode substituir outro produto especificado para a mesma finalidade no mesmo ambiente."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "pt": "Segurança operacional",
+      "en": "Safety",
+      "definition": "Avalia a capacidade do produto de evitar estados que coloquem em risco vida, saúde, propriedade ou meio ambiente.",
+      "question": "O produto evita ou reduz situações perigosas e mantém a operação dentro de condições seguras?",
+      "subs": [
+        {
+          "pt": "Restrição operacional",
+          "en": "Operational constraint",
+          "definition": "O produto limita sua operação a parâmetros e estados seguros diante de um perigo operacional."
+        },
+        {
+          "pt": "Identificação de riscos",
+          "en": "Risk identification",
+          "definition": "O produto identifica sequências de eventos ou operações que podem expor pessoas, bens ou ambiente a risco inaceitável."
+        },
+        {
+          "pt": "Segurança contra falhas",
+          "en": "Fail safe",
+          "definition": "Quando ocorre uma falha, o produto entra automaticamente em modo seguro ou retorna a uma condição segura."
+        },
+        {
+          "pt": "Aviso de perigo",
+          "en": "Hazard warning",
+          "definition": "O produto alerta sobre riscos inaceitáveis com antecedência suficiente para permitir reação segura."
+        },
+        {
+          "pt": "Integração segura",
+          "en": "Safe integration",
+          "definition": "O produto mantém a segurança durante e depois da integração com outros componentes."
+        }
+      ]
+    }
+  ],
+  "questions": [
+    {
+      "stage": "functional",
+      "sub": "Completude funcional",
+      "prompt": "Um portal de RH permite consultar férias, mas o requisito do projeto também previa solicitar férias pelo próprio sistema. Essa função não foi implementada. Qual subcaracterística foi mais diretamente afetada?",
+      "options": [
+        "Completude funcional",
+        "Correção funcional",
+        "Adequação funcional",
+        "Interoperabilidade"
+      ],
+      "correct": 0,
+      "explanation": "A função necessária não existe. O problema está na cobertura do conjunto de funções previstas: completude funcional."
+    },
+    {
+      "stage": "functional",
+      "sub": "Correção funcional",
+      "prompt": "O módulo de folha de pagamento possui a função de calcular horas extras, mas em determinados casos retorna um valor matematicamente incorreto. Qual subcaracterística está comprometida?",
+      "options": [
+        "Correção funcional",
+        "Completude funcional",
+        "Capacidade",
+        "Modificabilidade"
+      ],
+      "correct": 0,
+      "explanation": "A função existe, porém produz resultado incorreto. Isso caracteriza problema de correção funcional."
+    },
+    {
+      "stage": "functional",
+      "sub": "Adequação funcional",
+      "prompt": "O sistema possui todas as funções para fechar um pedido, mas obriga o usuário a exportar dados para uma planilha e importá-los novamente antes de finalizar a operação. O que está mais comprometido?",
+      "options": [
+        "Adequação funcional",
+        "Correção funcional",
+        "Disponibilidade",
+        "Coexistência"
+      ],
+      "correct": 0,
+      "explanation": "As funções existem, mas não facilitam a conclusão da tarefa. A adequação funcional avalia se as funções ajudam o usuário a alcançar o objetivo."
+    },
+    {
+      "stage": "performance",
+      "sub": "Comportamento no tempo",
+      "prompt": "Uma API deveria responder em até 2 segundos, porém leva 12 segundos em condições normais de uso. Qual subcaracterística deve ser analisada primeiro?",
+      "options": [
+        "Comportamento no tempo",
+        "Utilização de recursos",
+        "Capacidade",
+        "Disponibilidade"
+      ],
+      "correct": 0,
+      "explanation": "O requisito violado é diretamente relacionado ao tempo de resposta, portanto comportamento no tempo."
+    },
+    {
+      "stage": "performance",
+      "sub": "Utilização de recursos",
+      "prompt": "Um serviço simples mantém a CPU em 95% e consome quase toda a memória do servidor mesmo com poucos usuários. Qual subcaracterística está em foco?",
+      "options": [
+        "Utilização de recursos",
+        "Capacidade",
+        "Comportamento no tempo",
+        "Escalabilidade"
+      ],
+      "correct": 0,
+      "explanation": "O problema é a quantidade de CPU e memória usada para executar as funções, caracterizando utilização de recursos."
+    },
+    {
+      "stage": "performance",
+      "sub": "Capacidade",
+      "prompt": "O sistema atende aos tempos de resposta e usa poucos recursos, mas foi projetado para no máximo 100 usuários simultâneos e o negócio precisa de 1.000. Qual subcaracterística está insuficiente?",
+      "options": [
+        "Capacidade",
+        "Escalabilidade",
+        "Comportamento no tempo",
+        "Coexistência"
+      ],
+      "correct": 0,
+      "explanation": "Capacidade verifica se os limites máximos atuais do produto atendem aos requisitos. Escalabilidade trata da adaptação a cargas variáveis e crescimento."
+    },
+    {
+      "stage": "compatibility",
+      "sub": "Coexistência",
+      "prompt": "Dois sistemas instalados no mesmo servidor funcionam bem separadamente, mas quando executados juntos um deles monopoliza recursos e prejudica o outro. Qual subcaracterística é mais diretamente afetada?",
+      "options": [
+        "Coexistência",
+        "Interoperabilidade",
+        "Utilização de recursos",
+        "Adaptabilidade"
+      ],
+      "correct": 0,
+      "explanation": "Coexistência trata de compartilhar o mesmo ambiente e recursos sem impacto prejudicial entre produtos."
+    },
+    {
+      "stage": "compatibility",
+      "sub": "Interoperabilidade",
+      "prompt": "O ERP envia pedidos por API, mas o sistema de logística não consegue interpretar os dados recebidos e, por isso, a integração falha. Qual subcaracterística está comprometida?",
+      "options": [
+        "Interoperabilidade",
+        "Coexistência",
+        "Completude funcional",
+        "Autenticidade"
+      ],
+      "correct": 0,
+      "explanation": "Há falha na troca e no uso das informações entre sistemas, portanto interoperabilidade."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Reconhecimento de adequação",
+      "prompt": "Ao acessar a página inicial de um software, o usuário não consegue perceber se a ferramenta serve para sua necessidade nem quais problemas ela resolve. Qual subcaracterística está mais relacionada?",
+      "options": [
+        "Reconhecimento de adequação",
+        "Capacidade de aprendizado",
+        "Autodescrição",
+        "Envolvimento do usuário"
+      ],
+      "correct": 0,
+      "explanation": "O reconhecimento de adequação verifica se o usuário consegue perceber que o produto é apropriado para suas necessidades."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Capacidade de aprendizado",
+      "prompt": "Funcionários novos precisam de três semanas de treinamento para executar tarefas básicas que deveriam ser aprendidas em poucas horas. Qual subcaracterística está em risco?",
+      "options": [
+        "Capacidade de aprendizado",
+        "Operabilidade",
+        "Assistência ao usuário",
+        "Reconhecimento de adequação"
+      ],
+      "correct": 0,
+      "explanation": "A questão central é o tempo e esforço necessários para aprender a usar as funções, logo capacidade de aprendizado."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Operabilidade",
+      "prompt": "O sistema usa atalhos inconsistentes, botões mudam de posição entre telas e comandos simples exigem muitos passos desnecessários. Qual subcaracterística está mais comprometida?",
+      "options": [
+        "Operabilidade",
+        "Envolvimento do usuário",
+        "Autodescrição",
+        "Completude funcional"
+      ],
+      "correct": 0,
+      "explanation": "Operabilidade está ligada à facilidade de operar e controlar o produto durante a execução das tarefas."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Proteção contra erros do usuário",
+      "prompt": "Um botão “Excluir todos os registros” é executado imediatamente, sem confirmação, validação ou possibilidade de desfazer. Qual subcaracterística deveria prevenir esse problema?",
+      "options": [
+        "Proteção contra erros do usuário",
+        "Autodescrição",
+        "Segurança contra falhas",
+        "Integridade"
+      ],
+      "correct": 0,
+      "explanation": "A interface deveria prevenir um erro operacional grave do usuário. Isso é proteção contra erros do usuário."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Envolvimento do usuário",
+      "prompt": "A interface é funcional, mas confusa, pouco convidativa e sem feedback visual; testes mostram que usuários abandonam rapidamente a aplicação mesmo sem erros técnicos. Qual subcaracterística é mais pertinente?",
+      "options": [
+        "Envolvimento do usuário",
+        "Operabilidade",
+        "Disponibilidade",
+        "Reconhecimento de adequação"
+      ],
+      "correct": 0,
+      "explanation": "Envolvimento do usuário considera se a apresentação das funções e informações é convidativa e motivadora para a interação contínua."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Inclusão",
+      "prompt": "Uma plataforma internacional usa apenas exemplos, termos e fluxos compreensíveis para um único grupo cultural e idioma, apesar de seu público incluir pessoas de várias regiões e níveis de escolaridade. Qual subcaracterística está mais relacionada?",
+      "options": [
+        "Inclusão",
+        "Assistência ao usuário",
+        "Capacidade de aprendizado",
+        "Compatibilidade"
+      ],
+      "correct": 0,
+      "explanation": "Inclusão considera pessoas de diferentes origens, culturas, idiomas, idades, educação e situações."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Assistência ao usuário",
+      "prompt": "Um serviço público digital não pode ser operado por teclado, não funciona com leitor de tela e não oferece meios alternativos de entrada para pessoas com limitações motoras. Qual subcaracterística está diretamente afetada?",
+      "options": [
+        "Assistência ao usuário",
+        "Inclusão",
+        "Autodescrição",
+        "Operabilidade"
+      ],
+      "correct": 0,
+      "explanation": "Assistência ao usuário abrange a possibilidade de pessoas com ampla variedade de capacidades, inclusive deficiências, atingirem seus objetivos."
+    },
+    {
+      "stage": "interaction",
+      "sub": "Autodescrição",
+      "prompt": "A tela mostra apenas ícones sem rótulos, não informa o estado atual da operação e obriga o usuário a consultar o manual para descobrir o significado de ações básicas. Qual subcaracterística está comprometida?",
+      "options": [
+        "Autodescrição",
+        "Reconhecimento de adequação",
+        "Envolvimento do usuário",
+        "Capacidade de aprendizado"
+      ],
+      "correct": 0,
+      "explanation": "Autodescrição exige que a própria interface comunique informações suficientes sobre estado, possibilidades e uso."
+    },
+    {
+      "stage": "reliability",
+      "sub": "Inexistência de falhas",
+      "prompt": "Durante a operação normal, sem sobrecarga ou incidentes externos, o aplicativo fecha inesperadamente várias vezes por dia. Qual subcaracterística está mais diretamente comprometida?",
+      "options": [
+        "Inexistência de falhas",
+        "Disponibilidade",
+        "Tolerância a falhas",
+        "Recuperabilidade"
+      ],
+      "correct": 0,
+      "explanation": "A aplicação apresenta falhas em condições normais, o que se relaciona diretamente à inexistência de falhas."
+    },
+    {
+      "stage": "reliability",
+      "sub": "Disponibilidade",
+      "prompt": "Um sistema hospitalar precisa estar acessível 24x7, mas fica indisponível por duas horas toda semana. Qual subcaracterística é a principal preocupação?",
+      "options": [
+        "Disponibilidade",
+        "Inexistência de falhas",
+        "Capacidade",
+        "Resistência"
+      ],
+      "correct": 0,
+      "explanation": "Disponibilidade verifica se o produto está operacional e acessível quando necessário."
+    },
+    {
+      "stage": "reliability",
+      "sub": "Tolerância a falhas",
+      "prompt": "Em um cluster, um servidor apresenta falha, mas o serviço deveria continuar funcionando automaticamente nos demais nós. Qual subcaracterística descreve essa capacidade?",
+      "options": [
+        "Tolerância a falhas",
+        "Recuperabilidade",
+        "Disponibilidade",
+        "Segurança contra falhas"
+      ],
+      "correct": 0,
+      "explanation": "Tolerância a falhas é continuar operando como previsto apesar de falhas de hardware ou software."
+    },
+    {
+      "stage": "reliability",
+      "sub": "Recuperabilidade",
+      "prompt": "Após uma queda de energia, o sistema precisa restaurar dados recentes e retornar ao estado consistente anterior em poucos minutos. Qual subcaracterística está em foco?",
+      "options": [
+        "Recuperabilidade",
+        "Tolerância a falhas",
+        "Integridade",
+        "Inexistência de falhas"
+      ],
+      "correct": 0,
+      "explanation": "Recuperabilidade avalia a restauração de dados e do estado desejado após interrupção ou falha."
+    },
+    {
+      "stage": "security",
+      "sub": "Confidencialidade",
+      "prompt": "Usuários sem autorização conseguem visualizar prontuários médicos que deveriam ser restritos à equipe responsável. Qual subcaracterística foi violada?",
+      "options": [
+        "Confidencialidade",
+        "Integridade",
+        "Autenticidade",
+        "Responsabilização"
+      ],
+      "correct": 0,
+      "explanation": "Confidencialidade garante que dados sejam acessíveis apenas a entidades autorizadas."
+    },
+    {
+      "stage": "security",
+      "sub": "Integridade",
+      "prompt": "Um atacante altera silenciosamente o valor de transações armazenadas no banco de dados. Qual subcaracterística está diretamente comprometida?",
+      "options": [
+        "Integridade",
+        "Confidencialidade",
+        "Não repúdio",
+        "Resistência"
+      ],
+      "correct": 0,
+      "explanation": "Integridade protege dados e estado do sistema contra alteração ou exclusão não autorizada."
+    },
+    {
+      "stage": "security",
+      "sub": "Não repúdio",
+      "prompt": "Uma empresa precisa provar posteriormente que uma determinada transação eletrônica foi realmente realizada, evitando que a parte responsável negue o evento. Qual subcaracterística é necessária?",
+      "options": [
+        "Não repúdio",
+        "Responsabilização",
+        "Autenticidade",
+        "Integridade"
+      ],
+      "correct": 0,
+      "explanation": "Não repúdio fornece evidências de que ações ou eventos ocorreram para que não possam ser negados posteriormente."
+    },
+    {
+      "stage": "security",
+      "sub": "Responsabilização",
+      "prompt": "A auditoria precisa identificar de forma única qual conta executou cada alteração crítica no sistema. Qual subcaracterística atende melhor essa necessidade?",
+      "options": [
+        "Responsabilização",
+        "Não repúdio",
+        "Autenticidade",
+        "Confidencialidade"
+      ],
+      "correct": 0,
+      "explanation": "Responsabilização permite rastrear ações de forma única até a entidade responsável."
+    },
+    {
+      "stage": "security",
+      "sub": "Autenticidade",
+      "prompt": "Antes de liberar acesso administrativo, o sistema precisa comprovar que a identidade apresentada pertence realmente ao administrador alegado. Qual subcaracterística está em foco?",
+      "options": [
+        "Autenticidade",
+        "Confidencialidade",
+        "Responsabilização",
+        "Resistência"
+      ],
+      "correct": 0,
+      "explanation": "Autenticidade está relacionada a comprovar a identidade alegada de um sujeito ou recurso."
+    },
+    {
+      "stage": "security",
+      "sub": "Resistência",
+      "prompt": "Durante um ataque coordenado, o sistema deve manter operações essenciais enquanto aplica mecanismos defensivos. Qual subcaracterística da versão 2023 trata diretamente disso?",
+      "options": [
+        "Resistência",
+        "Disponibilidade",
+        "Tolerância a falhas",
+        "Integridade"
+      ],
+      "correct": 0,
+      "explanation": "Resistência é a capacidade de sustentar operações enquanto o produto está sob ataque malicioso."
+    },
+    {
+      "stage": "maintainability",
+      "sub": "Modularidade",
+      "prompt": "Uma pequena alteração no módulo de cadastro provoca mudanças obrigatórias em dezenas de módulos não relacionados. Qual subcaracterística precisa ser melhorada?",
+      "options": [
+        "Modularidade",
+        "Modificabilidade",
+        "Capacidade de análise",
+        "Reutilização"
+      ],
+      "correct": 0,
+      "explanation": "Boa modularidade reduz o impacto de mudanças de um componente sobre outros componentes."
+    },
+    {
+      "stage": "maintainability",
+      "sub": "Reutilização",
+      "prompt": "Uma equipe deseja utilizar o mesmo componente de autenticação, sem reescrevê-lo, em vários produtos diferentes da organização. Qual subcaracterística está sendo explorada?",
+      "options": [
+        "Reutilização",
+        "Modularidade",
+        "Substituibilidade",
+        "Adaptabilidade"
+      ],
+      "correct": 0,
+      "explanation": "Reutilização avalia o uso de um ativo em mais de um sistema ou na construção de outros ativos."
+    },
+    {
+      "stage": "maintainability",
+      "sub": "Capacidade de análise",
+      "prompt": "Quando ocorre um defeito, a equipe leva dias apenas para descobrir a causa e quais módulos serão afetados pela correção. Qual subcaracterística está mais comprometida?",
+      "options": [
+        "Capacidade de análise",
+        "Testabilidade",
+        "Modificabilidade",
+        "Modularidade"
+      ],
+      "correct": 0,
+      "explanation": "Capacidade de análise envolve diagnosticar causas, avaliar impactos e identificar as partes que precisam ser modificadas."
+    },
+    {
+      "stage": "maintainability",
+      "sub": "Modificabilidade",
+      "prompt": "Toda correção aparentemente simples costuma introduzir novos defeitos em funcionalidades já estáveis. Qual subcaracterística está mais relacionada?",
+      "options": [
+        "Modificabilidade",
+        "Testabilidade",
+        "Modularidade",
+        "Reutilização"
+      ],
+      "correct": 0,
+      "explanation": "Modificabilidade avalia se mudanças podem ser feitas sem introduzir defeitos ou degradar a qualidade existente."
+    },
+    {
+      "stage": "maintainability",
+      "sub": "Testabilidade",
+      "prompt": "Após uma alteração, é extremamente difícil definir critérios objetivos e preparar testes para verificar se o componente continua correto. Qual subcaracterística está comprometida?",
+      "options": [
+        "Testabilidade",
+        "Capacidade de análise",
+        "Modificabilidade",
+        "Correção funcional"
+      ],
+      "correct": 0,
+      "explanation": "Testabilidade trata da facilidade de estabelecer critérios e executar testes que comprovem seu atendimento."
+    },
+    {
+      "stage": "flexibility",
+      "sub": "Adaptabilidade",
+      "prompt": "O produto foi desenvolvido para Linux, mas precisa ser transferido para outro ambiente operacional e hardware com mudanças mínimas. Qual subcaracterística está em foco?",
+      "options": [
+        "Adaptabilidade",
+        "Instalabilidade",
+        "Substituibilidade",
+        "Coexistência"
+      ],
+      "correct": 0,
+      "explanation": "Adaptabilidade trata da transferência ou adaptação eficaz para diferentes ambientes de hardware, software ou uso."
+    },
+    {
+      "stage": "flexibility",
+      "sub": "Escalabilidade",
+      "prompt": "Uma plataforma SaaS precisa ajustar sua capacidade conforme o número de clientes cresce de 5 mil para 500 mil e também reduzir recursos em períodos de baixa. Qual subcaracterística descreve melhor essa necessidade?",
+      "options": [
+        "Escalabilidade",
+        "Capacidade",
+        "Adaptabilidade",
+        "Utilização de recursos"
+      ],
+      "correct": 0,
+      "explanation": "Escalabilidade trata da adaptação a cargas crescentes ou decrescentes e à variabilidade de capacidade."
+    },
+    {
+      "stage": "flexibility",
+      "sub": "Instalabilidade",
+      "prompt": "A implantação de uma nova versão exige dezenas de passos manuais, configurações frágeis e frequentemente falha durante a instalação. Qual subcaracterística deve ser melhorada?",
+      "options": [
+        "Instalabilidade",
+        "Adaptabilidade",
+        "Modificabilidade",
+        "Operabilidade"
+      ],
+      "correct": 0,
+      "explanation": "Instalabilidade avalia a eficácia e eficiência para instalar e remover o produto no ambiente especificado."
+    },
+    {
+      "stage": "flexibility",
+      "sub": "Substituibilidade",
+      "prompt": "Uma organização quer trocar seu sistema legado por um novo produto que cumpra a mesma finalidade no mesmo ambiente, minimizando impactos da substituição. Qual subcaracterística é central?",
+      "options": [
+        "Substituibilidade",
+        "Interoperabilidade",
+        "Adaptabilidade",
+        "Reutilização"
+      ],
+      "correct": 0,
+      "explanation": "Substituibilidade avalia a capacidade de um produto substituir outro especificado para a mesma finalidade no mesmo ambiente."
+    },
+    {
+      "stage": "safety",
+      "sub": "Restrição operacional",
+      "prompt": "Uma máquina industrial detecta temperatura acima do limite e bloqueia automaticamente a continuidade da operação fora da faixa segura. Qual subcaracterística está sendo aplicada?",
+      "options": [
+        "Restrição operacional",
+        "Segurança contra falhas",
+        "Aviso de perigo",
+        "Identificação de riscos"
+      ],
+      "correct": 0,
+      "explanation": "Restrição operacional mantém a operação dentro de parâmetros ou estados seguros diante de um perigo."
+    },
+    {
+      "stage": "safety",
+      "sub": "Identificação de riscos",
+      "prompt": "O sistema analisa a combinação de pressão, temperatura e sequência de comandos para reconhecer uma condição que pode causar explosão antes de ela ocorrer. Qual subcaracterística é essa?",
+      "options": [
+        "Identificação de riscos",
+        "Aviso de perigo",
+        "Restrição operacional",
+        "Resistência"
+      ],
+      "correct": 0,
+      "explanation": "Identificação de riscos detecta cursos de eventos ou operações que podem expor pessoas, bens ou ambiente a risco inaceitável."
+    },
+    {
+      "stage": "safety",
+      "sub": "Segurança contra falhas",
+      "prompt": "Se o sensor principal de um equipamento médico falhar, o software deve interromper a emissão e colocar o equipamento automaticamente em estado seguro. Qual subcaracterística descreve esse comportamento?",
+      "options": [
+        "Segurança contra falhas",
+        "Tolerância a falhas",
+        "Recuperabilidade",
+        "Restrição operacional"
+      ],
+      "correct": 0,
+      "explanation": "Segurança contra falhas significa entrar automaticamente em modo ou condição segura quando uma falha ocorre."
+    },
+    {
+      "stage": "safety",
+      "sub": "Aviso de perigo",
+      "prompt": "Antes que a pressão atinja nível crítico, o sistema aciona alertas claros para que o operador tenha tempo suficiente de reagir e evitar um acidente. Qual subcaracterística está em foco?",
+      "options": [
+        "Aviso de perigo",
+        "Identificação de riscos",
+        "Segurança contra falhas",
+        "Envolvimento do usuário"
+      ],
+      "correct": 0,
+      "explanation": "Aviso de perigo comunica riscos com antecedência suficiente para permitir reação segura."
+    },
+    {
+      "stage": "safety",
+      "sub": "Integração segura",
+      "prompt": "Após conectar um novo controlador de terceiros a uma linha automatizada, o conjunto precisa continuar respeitando todos os limites de segurança. Qual subcaracterística é mais diretamente relevante?",
+      "options": [
+        "Integração segura",
+        "Interoperabilidade",
+        "Coexistência",
+        "Autenticidade"
+      ],
+      "correct": 0,
+      "explanation": "Integração segura avalia a manutenção da segurança durante e após a integração com outros componentes."
+    }
+  ],
+  "bossQuestions": [
+    {
+      "prompt": "Um marketplace entrega todas as funções corretas, mas durante uma promoção o tempo de resposta sobe para 25 segundos e o throughput cai drasticamente. Qual característica deve ser priorizada?",
+      "options": [
+        "Eficiência de desempenho",
+        "Adequação funcional",
+        "Flexibilidade",
+        "Confiabilidade"
+      ],
+      "correct": 0,
+      "explanation": "O incidente é de desempenho sob carga: tempo e taxa de processamento."
+    },
+    {
+      "prompt": "O sistema consegue processar pedidos, mas não consegue trocar corretamente os dados de estoque com o ERP parceiro. Qual característica está mais diretamente envolvida?",
+      "options": [
+        "Compatibilidade",
+        "Capacidade de interação",
+        "Manutenibilidade",
+        "Segurança operacional"
+      ],
+      "correct": 0,
+      "explanation": "A troca e uso de informações entre produtos é tema de compatibilidade, especialmente interoperabilidade."
+    },
+    {
+      "prompt": "Uma aplicação expõe relatórios sigilosos a usuários sem permissão e não registra de forma confiável quem acessou os dados. Qual característica está mais comprometida?",
+      "options": [
+        "Segurança da informação",
+        "Confiabilidade",
+        "Adequação funcional",
+        "Flexibilidade"
+      ],
+      "correct": 0,
+      "explanation": "O caso envolve confidencialidade e responsabilização, ambas sob Segurança (Security)."
+    },
+    {
+      "prompt": "Uma alteração pequena em um módulo exige modificações em grande parte do sistema e os testes de regressão são difíceis de estruturar. Qual característica merece maior atenção?",
+      "options": [
+        "Manutenibilidade",
+        "Eficiência de desempenho",
+        "Compatibilidade",
+        "Capacidade de interação"
+      ],
+      "correct": 0,
+      "explanation": "Impacto de mudanças e dificuldade de testar são problemas de modularidade/testabilidade, dentro de manutenibilidade."
+    },
+    {
+      "prompt": "Um equipamento automatizado continua movimentando um braço mecânico mesmo após detectar falha crítica em um sensor, podendo ferir pessoas. Qual característica deve ser tratada imediatamente?",
+      "options": [
+        "Segurança operacional",
+        "Confiabilidade",
+        "Segurança da informação",
+        "Adequação funcional"
+      ],
+      "correct": 0,
+      "explanation": "O problema envolve risco direto à vida e necessidade de condição segura diante de falha: Safety."
+    },
+    {
+      "prompt": "Usuários com deficiência visual não conseguem navegar pelo portal com leitor de tela e pessoas de diferentes perfis têm dificuldade de concluir tarefas básicas. Qual característica é central?",
+      "options": [
+        "Capacidade de interação",
+        "Compatibilidade",
+        "Flexibilidade",
+        "Confiabilidade"
+      ],
+      "correct": 0,
+      "explanation": "A questão envolve assistência ao usuário, inclusão e interação pela interface."
+    },
+    {
+      "prompt": "O sistema atende 300 usuários hoje, mas não consegue ajustar sua capacidade para suportar o crescimento esperado para dezenas de milhares sem reescrita ampla. Qual característica está mais relacionada?",
+      "options": [
+        "Flexibilidade",
+        "Eficiência de desempenho",
+        "Adequação funcional",
+        "Segurança da informação"
+      ],
+      "correct": 0,
+      "explanation": "A necessidade é adaptação ao crescimento de carga, especialmente escalabilidade, dentro de flexibilidade."
+    },
+    {
+      "prompt": "Uma função obrigatória pelo negócio simplesmente não existe na nova versão do sistema. Qual característica está comprometida?",
+      "options": [
+        "Adequação funcional",
+        "Confiabilidade",
+        "Compatibilidade",
+        "Segurança operacional"
+      ],
+      "correct": 0,
+      "explanation": "Falta de função requerida é um problema de completude funcional."
+    },
+    {
+      "prompt": "O serviço precisa operar 24x7, mas possui indisponibilidades frequentes e demora para restaurar o estado após falhas. Qual característica é central?",
+      "options": [
+        "Confiabilidade",
+        "Eficiência de desempenho",
+        "Manutenibilidade",
+        "Segurança da informação"
+      ],
+      "correct": 0,
+      "explanation": "Disponibilidade e recuperabilidade pertencem à confiabilidade."
+    }
+  ]
+}

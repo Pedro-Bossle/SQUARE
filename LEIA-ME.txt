@@ -1,0 +1,82 @@
+PACOTE DA ATIVIDADE - SQuaRE QUEST / ISO/IEC 25010:2023
+
+DISCIPLINA
+  Qualidade e Auditoria de Tecnologia da Informação — 2026/02
+  Professora: Stefani Mano Valmini
+
+INTEGRANTES
+  Pedro Bossle Sandi
+  Rafael Guarese Sasseti
+  Arthur Leonardo Oliveira de Matos
+  Carla Regina Hentschel
+  Valdomiro Rehbein Junior
+
+ESTRUTURA DO JOGO
+  index.html                            — entrada do GitHub Pages
+  SQUARE_Quiz.html                      — página alternativa do quiz
+  SQuaRE_Quest_ISO_IEC_25010.html       — mesma entrada alternativa
+  css/styles.css                        — estilos da interface
+  js/quiz.js                            — lógica do jogo
+  data/quiz-data.json                   — características, perguntas e respostas
+  data/docs.json                        — documentação exibida na interface
+  LEIA-ME.txt                           — este arquivo
+  README.md                             — readme do repositório GitHub
+  .nojekyll                             — garante publicação correta no Pages
+
+COMO PUBLICAR NO GITHUB PAGES
+1. Envie esta pasta para um repositório no GitHub.
+2. Settings → Pages → Branch: main (ou master), pasta / (root).
+3. Abra https://SEU-USUARIO.github.io/NOME-DO-REPO/
+4. O index.html inicia o quiz automaticamente.
+
+COMO JOGAR (LOCAL)
+Na pasta do projeto:
+  python -m http.server 8080
+Abra http://localhost:8080/
+
+Fluxo do jogo:
+- Digite o nome da equipe e clique em "Iniciar auditoria".
+- O jogo percorre as 9 características da ISO/IEC 25010:2023.
+- Em cada setor, sorteia 2 desafios do banco daquela característica.
+- As alternativas também mudam de posição para evitar padrão de resposta.
+- Ao final, sorteia 5 casos integradores para a Auditoria Final.
+- Pontuação máxima: 2.800 pontos.
+
+COMO EDITAR PERGUNTAS E RESPOSTAS
+Abra data/quiz-data.json. A estrutura principal é:
+
+  meta            — regras (pontos, quantidade de questões, etc.)
+  references      — lista de referências exibida no jogo
+  characteristics — as 9 características e suas subcaracterísticas
+  questions       — banco de desafios por setor
+                    (stage, sub, prompt, options, correct, explanation)
+  bossQuestions   — casos da Auditoria Final
+                    (prompt, options, correct, explanation)
+
+O campo "correct" é o índice da alternativa certa em "options"
+(começando em 0). Em tempo de jogo as opções são embaralhadas.
+
+A documentação da interface fica em data/docs.json e também pode ser
+lida neste LEIA-ME pela aba "LEIA-ME" dentro do próprio quiz.
+
+O QUE O MATERIAL CONTEM
+- origem e evolução da família SQuaRE;
+- estrutura da família ISO/IEC 25000;
+- atualização ISO/IEC 25010:2011 x ISO/IEC 25010:2023;
+- 9 características do modelo de qualidade do produto;
+- 40 subcaracterísticas, com explicações práticas;
+- exemplos de requisitos e formas de verificação;
+- regras, participantes, duração, fluxo e pontuação do jogo;
+- banco completo de 40 desafios e gabaritos;
+- 9 casos integradores da Auditoria Final;
+- referências bibliográficas;
+- ficha para teste do protótipo;
+- roteiro para os 2 comentários exigidos no fórum.
+
+ANTES DE ENTREGAR
+- Nomes dos integrantes e curso já registrados neste pacote (capa / README / docs).
+- Realizar um playtest com colegas e preencher a tabela de teste do protótipo.
+- Depois que os jogos forem publicados no fórum, jogar e comentar pelo menos 2 trabalhos para obter os 0,5 ponto previstos na atividade.
+
+OBSERVACAO SOBRE A VERSAO DA NORMA
+A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto e explica a transição a partir da edição 2011 e do conteúdo SQuaRE apresentado no material da disciplina.

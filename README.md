@@ -2,6 +2,18 @@
 
 Jogo educacional de auditoria de qualidade de software baseado na **ISO/IEC 25010:2023**.
 
+## Equipe
+
+**Disciplina:** Qualidade e Auditoria de Tecnologia da Informação — 2026/02  
+**Professora:** Stefani Mano Valmini
+
+**Integrantes:**
+- Pedro Bossle Sandi
+- Rafael Guarese Sasseti
+- Arthur Leonardo Oliveira de Matos
+- Carla Regina Hentschel
+- Valdomiro Rehbein Junior
+
 ## Jogar online (GitHub Pages)
 
 1. Publique este repositório no GitHub.
@@ -35,7 +47,7 @@ Edite `data/quiz-data.json`. O campo `correct` é o índice (começando em 0) da
 
 ## Documentação no app
 
-No quiz, use **Documentação** para abrir a central integrada (como jogar, material, GitHub Pages, entrega, norma, referências e o LEIA-ME completo).
+No quiz, use **Documentação** para abrir a central integrada (equipe, como jogar, material, GitHub Pages, norma, referências e o LEIA-ME completo).
 
 ## Norma
 

@@ -1,0 +1,193 @@
+{
+  "title": "Central de documentação",
+  "subtitle": "Pacote da atividade — SQuaRE Quest / ISO/IEC 25010:2023",
+  "sections": [
+    {
+      "id": "team",
+      "label": "Equipe",
+      "icon": "00",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Trabalho da disciplina Qualidade e Auditoria de Tecnologia da Informação — 2026/02."
+        },
+        {
+          "type": "paragraph",
+          "text": "Professora: Stefani Mano Valmini"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Pedro Bossle Sandi",
+            "Rafael Guarese Sasseti",
+            "Arthur Leonardo Oliveira de Matos",
+            "Carla Regina Hentschel",
+            "Valdomiro Rehbein Junior"
+          ]
+        },
+        {
+          "type": "note",
+          "text": "Projeto SQuaRE Quest — jogo educacional baseado na ISO/IEC 25010:2023."
+        }
+      ]
+    },
+    {
+      "id": "play",
+      "label": "Como jogar",
+      "icon": "01",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Audite o NEXUS-9 percorrendo nove setores de qualidade e feche com a Auditoria Final."
+        },
+        {
+          "type": "steps",
+          "items": [
+            "Informe o nome da equipe e clique em Iniciar auditoria.",
+            "Em cada setor, leia a característica e responda 2 desafios sorteados.",
+            "As alternativas mudam de posição a cada partida.",
+            "Na Auditoria Final, resolva 5 incidentes misturados (características).",
+            "No relatório, revise erros e priorize setores fracos."
+          ]
+        },
+        {
+          "type": "kpis",
+          "items": [
+            { "value": "2.800", "label": "pontos máx." },
+            { "value": "18×100", "label": "setores" },
+            { "value": "5×200", "label": "auditoria final" },
+            { "value": "9", "label": "características" }
+          ]
+        },
+        {
+          "type": "note",
+          "text": "Atalhos: A–D ou 1–4 para responder · Enter para continuar. O progresso pode ser retomado se você sair no meio da partida."
+        }
+      ]
+    },
+    {
+      "id": "material",
+      "label": "O material",
+      "icon": "02",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Conteúdo acadêmico alinhado à disciplina Qualidade e Auditoria de TI."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Origem e evolução da família SQuaRE",
+            "Estrutura da família ISO/IEC 25000",
+            "Atualização ISO/IEC 25010:2011 × ISO/IEC 25010:2023",
+            "9 características do modelo de qualidade do produto",
+            "40 subcaracterísticas, com explicações práticas",
+            "Exemplos de requisitos e formas de verificação",
+            "Regras, participantes, duração, fluxo e pontuação do jogo",
+            "Banco completo de 40 desafios e gabaritos",
+            "9 casos integradores da Auditoria Final",
+            "Referências bibliográficas e ficha de teste do protótipo",
+            "Roteiro para os 2 comentários exigidos no fórum"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "files",
+      "label": "Arquivos",
+      "icon": "03",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Organização do repositório para manutenção e publicação no GitHub Pages."
+        },
+        {
+          "type": "files",
+          "items": [
+            { "path": "index.html", "desc": "Entrada do GitHub Pages (quiz)" },
+            { "path": "SQUARE_Quiz.html", "desc": "Página alternativa do quiz" },
+            { "path": "css/styles.css", "desc": "Estilos da interface" },
+            { "path": "js/quiz.js", "desc": "Lógica do jogo" },
+            { "path": "data/quiz-data.json", "desc": "Perguntas, respostas e características" },
+            { "path": "data/docs.json", "desc": "Textos desta central de documentação" },
+            { "path": "LEIA-ME.txt", "desc": "Readme em texto puro do pacote" },
+            { "path": "README.md", "desc": "Readme do repositório (GitHub)" }
+          ]
+        },
+        {
+          "type": "note",
+          "text": "Para editar questões, altere data/quiz-data.json. O campo correct é o índice (0-based) da alternativa certa em options."
+        }
+      ]
+    },
+    {
+      "id": "pages",
+      "label": "GitHub Pages",
+      "icon": "04",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "O jogo roda em HTTPS no GitHub Pages sem build — só HTML, CSS, JS e JSON."
+        },
+        {
+          "type": "steps",
+          "items": [
+            "Envie esta pasta para um repositório GitHub.",
+            "Em Settings → Pages, escolha Branch: main (ou master) e pasta / (root).",
+            "Aguarde alguns minutos e abra https://SEU-USUARIO.github.io/NOME-DO-REPO/",
+            "O index.html carrega automaticamente o quiz e os dados JSON."
+          ]
+        },
+        {
+          "type": "note",
+          "text": "Localmente: python -m http.server 8080 e abra http://localhost:8080/"
+        }
+      ]
+    },
+    {
+      "id": "norm",
+      "label": "Norma",
+      "icon": "06",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto."
+        },
+        {
+          "type": "paragraph",
+          "text": "Explica-se a transição a partir da edição 2011 e do conteúdo SQuaRE do material da disciplina. Quality-in-use está em ISO/IEC 25019:2023. Os enunciados do jogo são exemplos educacionais e não reproduzem o texto integral da norma."
+        }
+      ]
+    },
+    {
+      "id": "refs",
+      "label": "Referências",
+      "icon": "07",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Fontes normativas e de apoio usadas no pacote."
+        },
+        {
+          "type": "refs",
+          "source": "quiz"
+        }
+      ]
+    },
+    {
+      "id": "readme",
+      "label": "LEIA-ME",
+      "icon": "08",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Conteúdo integral do LEIA-ME.txt do pacote."
+        },
+        {
+          "type": "readme",
+          "source": "LEIA-ME.txt"
+        }
+      ]
+    }
+  ]
+}
