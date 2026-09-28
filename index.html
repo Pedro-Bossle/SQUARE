@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SQuaRE Quest — Auditoria ISO/IEC 25010:2023</title>
+  <meta name="description" content="Jogo educacional de auditoria de qualidade baseado na ISO/IEC 25010:2023 (SQuaRE)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-row">
+        <div>
+          <div class="brand">SQuaRE <span>QUEST</span></div>
+          <div id="pageSubtitle" style="font-size:0.75rem;opacity:.8;margin-top:2px">Auditoria ISO/IEC 25010:2023</div>
+        </div>
+        <div class="top-nav">
+          <button class="nav-link" type="button" id="btnDocsHeader" data-action="docs">Docs</button>
+          <div class="score-chip" id="scoreHeader" aria-live="polite">0 pts</div>
+        </div>
+      </div>
+      <div>
+        <div class="progress-meta">
+          <span id="progressText">0/9 setores</span>
+          <span id="stageHint">Pronto para iniciar</span>
+        </div>
+        <div class="bar" aria-hidden="true"><i id="progressBar"></i></div>
+      </div>
+      <div class="sector-map" id="sectorMap" aria-label="Mapa dos nove setores"></div>
+    </div>
+  </header>
+
+  <main>
+    <div id="resumeBanner" class="resume-banner hidden">
+      <p id="resumeText"></p>
+      <div class="actions" style="margin:0">
+        <button class="primary" type="button" id="btnResume">Continuar</button>
+        <button class="ghost" type="button" id="btnDiscardSave" style="color:#fff;border-color:#ffffff44">Novo jogo</button>
+      </div>
+    </div>
+
+    <section id="startScreen" class="panel">
+      <div class="mission-mark">Missão NEXUS-9</div>
+      <h1>Salve o release do NEXUS-9</h1>
+      <p class="lede">
+        Você integra a equipe de auditoria. Antes da produção, nove dimensões de qualidade
+        precisam ser verificadas. Diagnostique incidentes, aponte a subcaracterística correta
+        e feche a Auditoria Final.
+      </p>
+
+      <label for="teamName">Nome do jogador ou equipe</label>
+      <input id="teamName" type="text" placeholder="Ex.: Equipe QualiTI" maxlength="60" autocomplete="nickname" />
+
+      <div class="actions">
+        <button class="primary" type="button" id="btnStart">Iniciar auditoria</button>
+        <button class="ghost" type="button" id="btnDocsFromStart" data-action="docs">Documentação</button>
+      </div>
+
+      <div class="how">
+        <p class="eyebrow">Como funciona</p>
+        <div class="how-grid">
+          <div class="how-item">
+            <strong>01 · Setores</strong>
+            <p>Nove características da ISO/IEC 25010:2023, duas questões cada.</p>
+          </div>
+          <div class="how-item">
+            <strong>02 · Diagnóstico</strong>
+            <p>Escolha a subcaracterística; o feedback explica o raciocínio.</p>
+          </div>
+          <div class="how-item">
+            <strong>03 · Auditoria final</strong>
+            <p>Cinco incidentes misturados. Depois, relatório e revisão dos erros.</p>
+          </div>
+        </div>
+        <p class="note" style="margin-top:16px">
+          <strong>Norma:</strong> ISO/IEC 25010:2023 (9 características de qualidade do produto).
+          Quality-in-use está em ISO/IEC 25019:2023.
+        </p>
+      </div>
+
+      <div class="docs-home-card">
+        <p class="eyebrow">Central de documentação</p>
+        <p class="muted" style="margin-bottom:0">Guia do pacote, GitHub Pages, checklist de entrega e o LEIA-ME integrados à interface.</p>
+        <div class="docs-home-grid" id="docsHomeLinks"></div>
+      </div>
+    </section>
+
+    <section id="stageIntro" class="panel hidden"></section>
+    <section id="questionScreen" class="panel hidden"></section>
+    <section id="finalIntro" class="panel hidden"></section>
+    <section id="finalScreen" class="panel hidden"></section>
+
+    <section id="docsScreen" class="hidden" aria-label="Central de documentação">
+      <div class="docs-shell">
+        <nav class="docs-nav" aria-label="Seções da documentação">
+          <p class="eyebrow">Documentação</p>
+          <div id="docsTabs"></div>
+        </nav>
+        <div class="docs-body">
+          <div id="docsContent"></div>
+          <div class="actions">
+            <button type="button" class="primary" data-action="docs-back">Voltar ao quiz</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+  </main>
+
+  <footer>Projeto acadêmico — Qualidade e Auditoria de Tecnologia da Informação — 2026/2</footer>
+  <script src="js/quiz.js" defer></script>
+</body>
+</html>
