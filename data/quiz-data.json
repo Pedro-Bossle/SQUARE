@@ -404,6 +404,32 @@
       "explanation": "Há falha na troca e no uso das informações entre sistemas, portanto interoperabilidade."
     },
     {
+      "stage": "compatibility",
+      "sub": "Coexistência",
+      "prompt": "Um editor de planilhas e o sistema de ponto estão no mesmo computador. Ao abrir os dois, o editor consome tanta memória que o ponto eletrônico trava. Qual subcaracterística está mais diretamente afetada?",
+      "options": [
+        "Coexistência",
+        "Interoperabilidade",
+        "Utilização de recursos",
+        "Capacidade"
+      ],
+      "correct": 0,
+      "explanation": "Os produtos compartilham o mesmo ambiente e um prejudica o outro. Isso é coexistência. Utilização de recursos descreve o consumo do próprio produto, não o conflito entre produtos."
+    },
+    {
+      "stage": "compatibility",
+      "sub": "Interoperabilidade",
+      "prompt": "O caixa envia a venda num arquivo cujo leiaute foi combinado com o estoque, mas o estoque não consegue usar os campos recebidos e a baixa não acontece. Qual subcaracterística está comprometida?",
+      "options": [
+        "Interoperabilidade",
+        "Coexistência",
+        "Completude funcional",
+        "Adaptabilidade"
+      ],
+      "correct": 0,
+      "explanation": "A falha está na troca e no uso da informação entre sistemas. Coexistência trata de compartilhar o ambiente sem se prejudicar, não de interpretar dados recebidos."
+    },
+    {
       "stage": "interaction",
       "sub": "Reconhecimento de adequação",
       "prompt": "Ao acessar a página inicial de um software, o usuário não consegue perceber se a ferramenta serve para sua necessidade nem quais problemas ela resolve. Qual subcaracterística está mais relacionada?",

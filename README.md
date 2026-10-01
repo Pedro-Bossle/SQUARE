@@ -30,6 +30,8 @@ python -m http.server 8080
 
 Abra [http://localhost:8080/](http://localhost:8080/).
 
+O placar usa o Supabase. O jogo lê `.env` e, se existir, `.env.local`, com `SUPABASE_URL` e `SUPABASE_ANON_KEY` (chave publishable ou anon). A tabela é `square_leaderboard` (veja `supabase/migrations`) e guarda também a nota de 0 a 5 e um comentário de até 150 caracteres. Se o arquivo, a chave ou o banco não estiver disponível, o jogo abre sem o placar.
+
 ## Estrutura
 
 | Arquivo | Função |
@@ -40,6 +42,7 @@ Abra [http://localhost:8080/](http://localhost:8080/).
 | `data/quiz-data.json` | Perguntas e respostas |
 | `data/docs.json` | Documentação da central no app |
 | `LEIA-ME.txt` | Readme em texto do pacote acadêmico |
+| `.env.example` | Modelo das variáveis do Supabase |
 
 ## Editar o banco de questões
 
@@ -52,3 +55,5 @@ No quiz, use **Documentação** para abrir a central integrada (equipe, como jog
 ## Norma
 
 Modelo de qualidade do produto: **ISO/IEC 25010:2023**. Quality-in-use: **ISO/IEC 25019:2023**.
+
+A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras. Vale confirmar com a professora se este tema entra. O QR code do PDF, o Safari, o Firefox e um celular de verdade não foram testados.

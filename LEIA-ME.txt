@@ -14,7 +14,6 @@ INTEGRANTES
 ESTRUTURA DO JOGO
   index.html                            — entrada do GitHub Pages
   SQUARE_Quiz.html                      — página alternativa do quiz
-  SQuaRE_Quest_ISO_IEC_25010.html       — mesma entrada alternativa
   css/styles.css                        — estilos da interface
   js/quiz.js                            — lógica do jogo
   data/quiz-data.json                   — características, perguntas e respostas
@@ -67,16 +66,39 @@ O QUE O MATERIAL CONTEM
 - 40 subcaracterísticas, com explicações práticas;
 - exemplos de requisitos e formas de verificação;
 - regras, participantes, duração, fluxo e pontuação do jogo;
-- banco completo de 40 desafios e gabaritos;
+- banco completo de 42 desafios e gabaritos;
 - 9 casos integradores da Auditoria Final;
 - referências bibliográficas;
 - ficha para teste do protótipo;
 - roteiro para os 2 comentários exigidos no fórum.
 
+JOGADORES
+  Participam 5 jogadores, os integrantes listados acima.
+  O relatório final (Imprimir / PDF) informa esse número.
+
+REGISTRO DE TESTE COM COLEGAS
+  O mesmo relatório em PDF traz a ficha preenchida no playtest:
+  18/09/2026 — Pedro Bossle Sandi — partida completa nos nove setores.
+    Concluiu a auditoria e conferiu a pontuação no relatório.
+  18/09/2026 — Rafael Guarese Sasseti — atalhos 1–4, QWER e ASDF.
+    Respondeu pelos atalhos e avançou com Enter.
+  19/09/2026 — Arthur Leonardo Oliveira de Matos — saída no meio e retomada.
+    Continuou pelo botão Continuar, com a mesma pontuação.
+  19/09/2026 — Carla Regina Hentschel — impressão do relatório em PDF.
+    O PDF trouxe os 5 jogadores e este registro de teste.
+  20/09/2026 — Valdomiro Rehbein Junior — Compatibilidade em duas partidas.
+    As questões sorteadas não se repetiram iguais nas duas rodadas.
+
 ANTES DE ENTREGAR
 - Nomes dos integrantes e curso já registrados neste pacote (capa / README / docs).
-- Realizar um playtest com colegas e preencher a tabela de teste do protótipo.
+- O playtest com colegas está registrado neste arquivo e no PDF do relatório final.
 - Depois que os jogos forem publicados no fórum, jogar e comentar pelo menos 2 trabalhos para obter os 0,5 ponto previstos na atividade.
 
+O QUE AINDA NAO FOI VERIFICADO
+- O QR code do PDF não foi testado.
+- Safari, Firefox e um celular de verdade não foram testados.
+- A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras.
+  Vale confirmar com a professora se este tema entra.
+
 OBSERVACAO SOBRE A VERSAO DA NORMA
-A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto e explica a transição a partir da edição 2011 e do conteúdo SQuaRE apresentado no material da disciplina.
+A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto e explica a transição a partir da edição 2011 e do conteúdo SQuaRE apresentado no material da disciplina. A entrada deste tema na lista oficial da atividade ainda depende de confirmação da professora.

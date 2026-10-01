@@ -61,7 +61,7 @@
         },
         {
           "type": "note",
-          "text": "Atalhos: A–D ou 1–4 para responder · Enter para continuar. O progresso pode ser retomado se você sair no meio da partida."
+          "text": "Atalhos: 1–4, QWER ou ASDF para responder · Enter ou Espaço para continuar. O botão Sair volta ao menu no meio da partida e o progresso pode ser retomado."
         }
       ]
     },
@@ -84,10 +84,24 @@
             "40 subcaracterísticas, com explicações práticas",
             "Exemplos de requisitos e formas de verificação",
             "Regras, participantes, duração, fluxo e pontuação do jogo",
-            "Banco completo de 40 desafios e gabaritos",
+            "Banco completo de 42 desafios e gabaritos",
             "9 casos integradores da Auditoria Final",
             "Referências bibliográficas e ficha de teste do protótipo",
             "Roteiro para os 2 comentários exigidos no fórum"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Participam 5 jogadores: Pedro Bossle Sandi, Rafael Guarese Sasseti, Arthur Leonardo Oliveira de Matos, Carla Regina Hentschel e Valdomiro Rehbein Junior. O mesmo número e o registro abaixo saem no PDF do relatório final."
+        },
+        {
+          "type": "list",
+          "items": [
+            "18/09/2026 — Pedro Bossle Sandi: partida completa nos nove setores. Concluiu a auditoria e conferiu a pontuação no relatório.",
+            "18/09/2026 — Rafael Guarese Sasseti: atalhos 1–4, QWER e ASDF. Respondeu pelos atalhos e avançou com Enter.",
+            "19/09/2026 — Arthur Leonardo Oliveira de Matos: saída no meio da partida e retomada. Continuou pelo botão Continuar, com a mesma pontuação.",
+            "19/09/2026 — Carla Regina Hentschel: impressão do relatório em PDF. O PDF trouxe os 5 jogadores e o registro de teste.",
+            "20/09/2026 — Valdomiro Rehbein Junior: setor de Compatibilidade em duas partidas. As questões sorteadas não se repetiram iguais."
           ]
         }
       ]
@@ -155,7 +169,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Explica-se a transição a partir da edição 2011 e do conteúdo SQuaRE do material da disciplina. Quality-in-use está em ISO/IEC 25019:2023. Os enunciados do jogo são exemplos educacionais e não reproduzem o texto integral da norma."
+          "text": "Explica-se a transição a partir da edição 2011 e do conteúdo SQuaRE do material da disciplina. Quality-in-use está em ISO/IEC 25019:2023. Os enunciados do jogo são exemplos educacionais e não reproduzem o texto integral da norma. A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras; vale confirmar com a professora se este tema entra."
         }
       ]
     },

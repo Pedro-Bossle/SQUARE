@@ -51,7 +51,9 @@
               <span class="swatch-fill" aria-hidden="true"></span>
             </button>
           </div>
-          <button class="nav-link" type="button" id="btnDocsHeader" data-action="docs">Docs</button>
+          <button class="nav-link" type="button" id="btnReduceFx" data-action="toggle-fx" aria-pressed="false" title="Reduzir animações de fundo">Efeitos</button>
+          <button class="nav-link hidden" type="button" id="btnQuit" data-action="quit">Sair</button>
+          <button class="nav-link" type="button" id="btnDocsHeader" data-action="docs">Guia</button>
           <button class="nav-link topbar-toggle" type="button" id="btnTopbarToggle" aria-expanded="false" aria-controls="topbarExpand" title="Mapa dos setores">Mapa</button>
           <div class="score-chip" id="scoreHeader" aria-live="polite">0 pts</div>
         </div>
@@ -83,29 +85,44 @@
     <section id="startScreen" class="retro-menu">
       <div class="retro-cabinet">
         <div class="retro-screen">
-          <p class="retro-insert">PLAYER SELECT</p>
+          <p class="retro-insert">SELEÇÃO</p>
           <h1 class="retro-logo">SQuaRE<br /><span>QUEST</span></h1>
-          <p class="retro-mission">MISSION NEXUS-9</p>
-          <p class="retro-blink">PRESS START TO AUDIT</p>
+          <p class="retro-mission">MISSÃO NEXUS-9</p>
+          <p class="retro-blink">INICIAR A AUDITORIA</p>
           <p class="retro-tag">ISO/IEC 25010:2023 · 9 SETORES · MAX 2800 PTS</p>
 
+          <div class="leaderboard hidden" aria-label="Placar das equipes">
+            <p class="leaderboard-kicker">AVALIAÇÕES</p>
+            <div class="leaderboard-viewport">
+              <div class="leaderboard-track is-static" id="leaderboardTrack">
+                <span class="leaderboard-item">Carregando placar…</span>
+              </div>
+            </div>
+          </div>
+
           <nav class="retro-panel" aria-label="Menu principal">
-            <label for="teamName">PLAYER NAME</label>
+            <label for="teamName">NOME DA EQUIPE</label>
             <input id="teamName" type="text" placeholder="EQUIPE QUALITI" maxlength="60" autocomplete="nickname" />
             <div class="retro-options">
               <button class="retro-opt retro-opt--start" type="button" id="btnStart">
-                <span class="retro-cursor" aria-hidden="true">&gt;</span> START AUDIT
+                <span class="retro-cursor" aria-hidden="true">&gt;</span> INICIAR AUDITORIA
+              </button>
+              <button class="retro-opt" type="button" data-action="open-board">
+                <span class="retro-cursor" aria-hidden="true">&gt;</span> PLACAR GLOBAL
+              </button>
+              <button class="retro-opt" type="button" data-action="open-reviews">
+                <span class="retro-cursor" aria-hidden="true">&gt;</span> AVALIAÇÕES
               </button>
               <button class="retro-opt" type="button" id="btnDocsFromStart" data-action="docs">
-                <span class="retro-cursor" aria-hidden="true">&gt;</span> DOCUMENTATION
+                <span class="retro-cursor" aria-hidden="true">&gt;</span> DOCUMENTAÇÃO
               </button>
             </div>
           </nav>
 
           <details class="retro-lore">
             <summary>
-              <span class="retro-lore-kicker">TRANSMISSÃO // LORE</span>
-              <span class="retro-lore-summary-title">BRIEFING NEXUS-9</span>
+              <span class="retro-lore-kicker">TRANSMISSÃO // HISTÓRIA</span>
+              <span class="retro-lore-summary-title">INTRODUÇÃO NEXUS-9</span>
             </summary>
             <div class="retro-lore-body-wrap">
               <p class="retro-lore-body">
@@ -115,7 +132,7 @@
                 pode derrubar serviços críticos.
               </p>
               <ul class="retro-lore-beats">
-                <li><span>STATUS</span> Build candidata sob contenção</li>
+                <li><span>SITUAÇÃO</span> Build candidata sob contenção</li>
                 <li><span>OBJETIVO</span> Diagnosticar incidentes por característica</li>
                 <li><span>PROTOCOLO</span> 9 setores · Auditoria Final · Relatório</li>
                 <li><span>RISCO</span> Qualidade comprometida em produção</li>
@@ -134,7 +151,7 @@
 
           <div class="retro-drawers">
             <details class="retro-drawer">
-              <summary>HOW TO PLAY</summary>
+              <summary>COMO JOGAR</summary>
               <div class="how-grid">
                 <div class="how-item">
                   <strong>01 SETORES</strong>
@@ -155,13 +172,13 @@
             </details>
 
             <details class="retro-drawer">
-              <summary>DOCS ARCHIVE</summary>
+              <summary>DOCUMENTAÇÃO</summary>
               <p class="muted">Guia do pacote, GitHub Pages, equipe e LEIA-ME.</p>
               <div class="docs-home-grid" id="docsHomeLinks"></div>
             </details>
 
             <details class="retro-drawer">
-              <summary>CREDITS</summary>
+              <summary>CRÉDITOS</summary>
               <div class="credits-body">
                 <p class="credits-course">Qualidade e Auditoria de Tecnologia da Informação — 2026/02</p>
                 <p class="credits-prof"><strong>Professora:</strong> Stefani Mano Valmini</p>
@@ -176,11 +193,13 @@
             </details>
           </div>
 
-          <p class="retro-footer-line">© 2026 SQUARE QUEST · HIGH SCORE 2800</p>
+          <p class="retro-footer-line">© 2026 SQUARE QUEST · RECORDE 2800</p>
         </div>
       </div>
     </section>
 
+    <section id="boardScreen" class="panel hidden" aria-label="Placar global"></section>
+    <section id="reviewsScreen" class="panel hidden" aria-label="Avaliações"></section>
     <section id="stageIntro" class="panel hidden"></section>
     <section id="questionScreen" class="panel hidden"></section>
     <section id="finalIntro" class="panel hidden"></section>
@@ -188,7 +207,7 @@
 
     <div id="perfectClear" class="perfect-clear hidden" aria-live="assertive" aria-hidden="true">
       <pre class="perfect-clear-dancer" id="perfectClearDancer" aria-hidden="true"></pre>
-      <p class="perfect-clear-caption" id="perfectClearCaption">PERFECT CLEAR</p>
+      <p class="perfect-clear-caption" id="perfectClearCaption">PONTUAÇÃO PERFEITA</p>
     </div>
 
     <section id="docsScreen" class="hidden" aria-label="Central de documentação">

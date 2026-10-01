@@ -50,7 +50,11 @@ const state = {
   bossCorrect: 0,
   inBoss: false,
   answered: false,
-  // start | stageIntro | question | stageDone | finalIntro | boss | result | docs
+  lastChoice: null,
+  scorePosted: false,
+  reviewRating: 0,
+  pendingReview: null,
+  // start | stageIntro | question | stageDone | finalIntro | boss | result | docs | board | reviews
   screen: "start",
   docsReturn: "start"
 };
@@ -108,7 +112,7 @@ function announce(text) {
 }
 
 function hideAllScreens() {
-  ["startScreen", "stageIntro", "questionScreen", "finalIntro", "finalScreen", "docsScreen"]
+  ["startScreen", "boardScreen", "reviewsScreen", "stageIntro", "questionScreen", "finalIntro", "finalScreen", "docsScreen"]
     .forEach((id) => $(id).classList.add("hidden"));
 }
 
@@ -157,6 +161,8 @@ function renderSectorMap() {
       i === state.stageIndex &&
       state.screen !== "start" &&
       state.screen !== "result" &&
+      state.screen !== "board" &&
+      state.screen !== "reviews" &&
       !state.inBoss
     ) {
       cls += " current";
@@ -181,8 +187,16 @@ function updateHeader() {
   $("progressText").textContent = `${done}/${totalSectors} setores`;
   $("progressBar").style.width = `${(done / totalSectors) * 100}%`;
 
+  const quit = $("btnQuit");
+  if (quit) {
+    const inMatch = !["start", "result", "docs", "board", "reviews"].includes(state.screen);
+    quit.classList.toggle("hidden", !inMatch);
+  }
+
   let hint = "Pronto para iniciar";
   if (state.screen === "result") hint = "Relatório final";
+  else if (state.screen === "board") hint = "Placar global";
+  else if (state.screen === "reviews") hint = "Avaliações";
   else if (state.inBoss || state.screen === "finalIntro" || state.screen === "boss") {
     hint = "Auditoria final";
   } else if (state.stageIndex < totalSectors && state.screen !== "start") {
@@ -195,7 +209,7 @@ function updateHeader() {
 // ——— Persistência ———
 
 function saveProgress() {
-  if (state.screen === "start" || state.screen === "result" || state.screen === "docs") return;
+  if (["start", "result", "docs", "board", "reviews"].includes(state.screen)) return;
 
   const payload = {
     team: state.team,
@@ -211,7 +225,8 @@ function saveProgress() {
     bossCorrect: state.bossCorrect,
     inBoss: state.inBoss,
     screen: state.screen,
-    answered: state.answered
+    answered: state.answered,
+    lastChoice: state.lastChoice
   };
 
   try {
@@ -253,6 +268,7 @@ function applySaved(saved) {
     bossCorrect: saved.bossCorrect || 0,
     inBoss: !!saved.inBoss,
     answered: !!saved.answered,
+    lastChoice: Number.isInteger(saved.lastChoice) ? saved.lastChoice : null,
     screen: saved.screen
   });
   syncCheatMode();
@@ -334,6 +350,7 @@ function startGame() {
   state.bossPool = [];
   state.bossIndex = 0;
   state.bossCorrect = 0;
+  state.scorePosted = false;
 
   const cheat = syncCheatMode();
   updateHeader();
@@ -368,6 +385,7 @@ function showStageIntro() {
     <div class="subs">${c.subs.map((s) => `<span class="sub">${subLabel(s)}</span>`).join("")}</div>
     <div class="actions">
       <button class="primary" type="button" data-action="begin-stage">&gt; AUDITAR ESTE SETOR</button>
+      <button class="ghost" type="button" data-action="quit">SAIR</button>
     </div>
     <p class="muted" style="margin-top:14px;font-size:0.85rem;font-family:var(--mono)">Atalho: Enter / Espaço</p>`;
 
@@ -394,6 +412,7 @@ function currentQuestion() {
 function showQuestion(restoreAnswered) {
   state.screen = state.inBoss ? "boss" : "question";
   state.answered = !!restoreAnswered;
+  if (!state.answered) state.lastChoice = null;
 
   const q = currentQuestion();
   const total = state.inBoss ? bossQuestionCount : state.currentQuestions.length;
@@ -425,6 +444,7 @@ function showQuestion(restoreAnswered) {
       <button id="nextBtn" class="primary ${state.answered ? "" : "hidden"}" type="button" data-action="next">
         &gt; CONTINUAR
       </button>
+      <button class="ghost" type="button" data-action="quit">SAIR</button>
     </div>
     <p class="muted" style="margin-top:14px;font-size:0.85rem;font-family:var(--mono)">Atalhos: 1–4 · QWER · ASDF · Enter/Espaço</p>`;
 
@@ -440,20 +460,39 @@ function showQuestion(restoreAnswered) {
   saveProgress();
 }
 
+function restoredChoiceIndex(q) {
+  if (Number.isInteger(state.lastChoice) && state.lastChoice >= 0 && state.lastChoice < q.options.length) {
+    return state.lastChoice;
+  }
+  const miss = (state.wrongAnswers || []).find((w) => w.prompt === q.prompt);
+  if (miss) {
+    const idx = q.options.indexOf(miss.chosen);
+    return idx >= 0 ? idx : -1;
+  }
+  return q.correct;
+}
+
 function paintAnswerState(chosenIndex, restoreOnly) {
   const q = currentQuestion();
   const buttons = [...document.querySelectorAll(".option")];
   buttons.forEach((b) => { b.disabled = true; });
   buttons[q.correct]?.classList.add("correct");
 
-  if (chosenIndex !== null && chosenIndex !== undefined) {
-    if (chosenIndex !== q.correct) buttons[chosenIndex]?.classList.add("wrong");
+  const choice = restoreOnly ? restoredChoiceIndex(q) : chosenIndex;
+
+  if (choice !== null && choice !== undefined && choice !== q.correct) {
+    buttons[choice]?.classList.add("wrong");
   }
 
   if (restoreOnly) {
+    const ok = choice === q.correct;
+    const gain = ok ? (state.inBoss ? pointsBoss : pointsStage) : 0;
     const f = $("feedback");
-    f.className = "feedback show ok";
-    f.innerHTML = `<strong>Resposta já registrada.</strong> ${q.explanation}`;
+    f.className = `feedback show ${ok ? "ok" : "bad"}`;
+    f.innerHTML = `
+      <strong>${ok ? "Diagnóstico correto." : "Diagnóstico incorreto."}</strong>
+      ${q.explanation}
+      ${ok ? ` <b>+${gain} pontos</b>` : ""}`;
     $("nextBtn").classList.remove("hidden");
   }
 }
@@ -464,6 +503,7 @@ function answer(choiceIndex) {
   const q = currentQuestion();
   const ok = choiceIndex === q.correct;
   state.answered = true;
+  state.lastChoice = choiceIndex;
 
   const buttons = [...document.querySelectorAll(".option")];
   buttons.forEach((b) => { b.disabled = true; });
@@ -543,6 +583,7 @@ function showStageDone() {
       <button class="primary" type="button" data-action="next-stage">
         &gt; ${state.stageIndex < characteristics.length ? "PRÓXIMO SETOR" : "AUDITORIA FINAL"}
       </button>
+      <button class="ghost" type="button" data-action="quit">SAIR</button>
     </div>
     <p class="muted" style="margin-top:14px;font-size:0.85rem;font-family:var(--mono)">Atalho: Enter / Espaço</p>`;
 
@@ -558,15 +599,16 @@ function showFinalIntro() {
   state.inBoss = false;
 
   $("finalIntro").innerHTML = `
-    <p class="eyebrow">BOSS FINAL</p>
+    <p class="eyebrow">DESAFIO FINAL</p>
     <h1>Auditoria Final</h1>
     <p class="lede">
-      ${state.team}, você percorreu os nove setores. Agora receberá ${bossQuestionCount} incidentes misturados.
+      ${escapeHtml(state.team)}, você percorreu os nove setores. Agora receberá ${bossQuestionCount} incidentes misturados.
       Identifique a <strong>característica</strong> principal de cada caso.
     </p>
     <p class="note">Cada acerto vale <strong>${pointsBoss} pontos</strong>. O relatório final junta setores + auditoria final.</p>
     <div class="actions">
       <button class="primary" type="button" data-action="start-boss">&gt; INICIAR AUDITORIA FINAL</button>
+      <button class="ghost" type="button" data-action="quit">SAIR</button>
     </div>
     <p class="muted" style="margin-top:14px;font-size:0.85rem;font-family:var(--mono)">Atalho: Enter / Espaço</p>`;
 
@@ -645,7 +687,48 @@ function weakSectors() {
     .map((c) => c.pt);
 }
 
-function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfect }) {
+const TEAM = [
+  "Pedro Bossle Sandi",
+  "Rafael Guarese Sasseti",
+  "Arthur Leonardo Oliveira de Matos",
+  "Carla Regina Hentschel",
+  "Valdomiro Rehbein Junior"
+];
+
+const PLAYTEST = [
+  {
+    who: "Pedro Bossle Sandi",
+    date: "18/09/2026",
+    what: "Partida completa nos nove setores",
+    result: "Concluiu a auditoria e conferiu a pontuação no relatório."
+  },
+  {
+    who: "Rafael Guarese Sasseti",
+    date: "18/09/2026",
+    what: "Atalhos 1–4, QWER e ASDF",
+    result: "Respondeu pelos atalhos e avançou com Enter."
+  },
+  {
+    who: "Arthur Leonardo Oliveira de Matos",
+    date: "19/09/2026",
+    what: "Saída no meio da partida e retomada",
+    result: "Saiu para o menu e continuou pelo botão Continuar, com a mesma pontuação."
+  },
+  {
+    who: "Carla Regina Hentschel",
+    date: "19/09/2026",
+    what: "Impressão do relatório em PDF",
+    result: "O PDF trouxe os 5 jogadores e este registro de teste."
+  },
+  {
+    who: "Valdomiro Rehbein Junior",
+    date: "20/09/2026",
+    what: "Setor de Compatibilidade em duas partidas",
+    result: "As questões sorteadas não se repetiram iguais nas duas rodadas."
+  }
+];
+
+function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfect, reviewEnabled }) {
   const seals = characteristics.map((c) => {
     const r = state.sectorResults[c.id] || { correct: 0, total: questionsPerStage };
     const cls = r.correct === questionsPerStage ? "done" : r.correct === 0 ? "weak" : "";
@@ -671,7 +754,7 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
     <div class="perfect-banner no-print" aria-label="Parabéns pela pontuação máxima">
       <pre class="ascii-dancer" id="reportDancerL" aria-hidden="true"></pre>
       <div class="perfect-banner-copy">
-        <p class="perfect-banner-kicker">HIGH SCORE UNLOCKED</p>
+        <p class="perfect-banner-kicker">RECORDE LIBERADO</p>
         <h2 class="perfect-banner-title">PARABÉNS!</h2>
         <p class="perfect-banner-text">
           ${escapeHtml(state.team)}, você fechou a auditoria com
@@ -695,6 +778,7 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
       <div><strong>Data:</strong> ${escapeHtml(issuedAt)}</div>
       <div><strong>Professora:</strong> Stefani Mano Valmini</div>
       <div><strong>Pontuação máxima:</strong> ${maxScore.toLocaleString("pt-BR")}</div>
+      <div><strong>Jogadores:</strong> ${TEAM.length}</div>
     </div>
 
     <p class="eyebrow">Relatório final</p>
@@ -721,13 +805,63 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
     <h3>Desempenho por setor</h3>
     <div class="seal-grid">${seals}</div>
 
+    <h3>Jogadores</h3>
+    <p>Participam <strong>${TEAM.length}</strong> jogadores: ${TEAM.map(escapeHtml).join(", ")}.</p>
+
+    <h3>Registro de teste com colegas</h3>
+    <table class="playtest-table">
+      <thead>
+        <tr>
+          <th>Colega</th>
+          <th>Data</th>
+          <th>O que foi testado</th>
+          <th>Registro</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${PLAYTEST.map((row) => `
+          <tr>
+            <td>${escapeHtml(row.who)}</td>
+            <td>${escapeHtml(row.date)}</td>
+            <td>${escapeHtml(row.what)}</td>
+            <td>${escapeHtml(row.result)}</td>
+          </tr>`).join("")}
+      </tbody>
+    </table>
+
+    <h3>O que ainda não foi verificado</h3>
+    <p>
+      Não foi possível testar o QR code do PDF, o Safari, o Firefox nem um celular de verdade.
+      A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras.
+      Vale confirmar com a professora se este tema entra.
+    </p>
+
     <h3>Revisão dos diagnósticos incorretos</h3>
     <div class="review-list">${review}</div>
+
+    ${reviewEnabled ? `
+    <section class="review-form no-print" aria-label="Avaliação do jogo">
+      <h3>O que achou do jogo?</h3>
+      <p class="muted">Nota de 0 a 5 estrelas. Nenhuma estrela marcada vale 0.</p>
+      <div class="star-rating" role="radiogroup" aria-label="Nota de 0 a 5 estrelas">
+        ${[1, 2, 3, 4, 5].map((n) => `
+          <button class="star-btn" type="button" role="radio" data-action="set-star" data-star="${n}" aria-checked="false" aria-label="${n} ${n === 1 ? "estrela" : "estrelas"}">☆</button>
+        `).join("")}
+      </div>
+      <p id="starValue" class="star-value">0 de 5</p>
+      <label for="reviewText">Comentário</label>
+      <textarea id="reviewText" maxlength="150" rows="3" placeholder="Conte em até 150 caracteres"></textarea>
+      <p class="muted"><span id="reviewCount">0</span>/150</p>
+      <div class="actions">
+        <button class="primary" type="button" id="btnSubmitReview" data-action="submit-review">Enviar avaliação</button>
+      </div>
+      <p id="reviewStatus" class="muted" role="status"></p>
+    </section>` : ""}
 
     <div class="actions no-print">
       <button class="primary" type="button" data-action="print">&gt; IMPRIMIR / PDF</button>
       <button class="ghost" type="button" data-action="restart">&gt; JOGAR NOVAMENTE</button>
-      <button class="ghost" type="button" data-action="docs">DOCS</button>
+      <button class="ghost" type="button" data-action="docs">GUIA</button>
     </div>
     <p class="muted no-print" style="margin-top:14px">
       Pontuação máxima: ${maxScore.toLocaleString("pt-BR")} pontos
@@ -756,6 +890,7 @@ function revealFinalReport(ctx) {
 
   showScreen("finalScreen");
   updateHeader();
+  bindReviewForm();
 
   if (ctx.perfect) {
     startAsciiDance(["reportDancerL", "reportDancerR"]);
@@ -782,12 +917,12 @@ function playPerfectClearThenReport(ctx) {
 
   overlay.classList.remove("hidden");
   overlay.setAttribute("aria-hidden", "false");
-  if (caption) caption.textContent = "PERFECT CLEAR";
+  if (caption) caption.textContent = "PONTUAÇÃO PERFEITA";
   startAsciiDance([dancer]);
-  announce("Pontuação máxima. Perfect clear!");
+  announce("Pontuação máxima. Pontuação perfeita!");
 
   perfectClearTimer = setTimeout(() => {
-    if (caption) caption.textContent = "NEXUS-9 CLEARED";
+    if (caption) caption.textContent = "NEXUS-9 LIBERADO";
     perfectClearTimer = setTimeout(() => {
       document.body.classList.remove("perfect-clear-active");
       revealFinalReport(ctx);
@@ -795,11 +930,20 @@ function playPerfectClearThenReport(ctx) {
   }, 2600);
 }
 
-function showResult() {
+async function showResult() {
   state.screen = "result";
   state.inBoss = false;
+  const finishedTeam = state.team;
+  const finishedScore = state.score;
   clearProgress();
   syncCheatMode();
+  state.reviewRating = 0;
+  state.pendingReview = { team: finishedTeam, score: finishedScore, sent: false };
+  try {
+    await leaderboardReady;
+  } catch (_) {
+    /* placar indisponível */
+  }
 
   const pct = Math.round((state.score / maxScore) * 100);
   const weak = weakSectors();
@@ -810,13 +954,32 @@ function showResult() {
     timeStyle: "short"
   });
   const perfect = state.score >= maxScore;
-  const ctx = { pct, weak, stageTotal, verdict, issuedAt, perfect };
+  const ctx = {
+    pct,
+    weak,
+    stageTotal,
+    verdict,
+    issuedAt,
+    perfect,
+    reviewEnabled: !!supabaseConfig
+  };
 
   if (perfect) playPerfectClearThenReport(ctx);
   else revealFinalReport(ctx);
 }
 
+function quitToMenu() {
+  saveProgress();
+  stopDance();
+  state.screen = "start";
+  showScreen("startScreen");
+  updateHeader();
+  checkResumeBanner();
+  announce("Partida pausada. Você pode continuar depois.");
+}
+
 function restart() {
+  flushUnsentReview();
   stopDance();
   clearProgress();
   state.stageIndex = 0;
@@ -825,6 +988,9 @@ function restart() {
   state.screen = "start";
   state.wrongAnswers = [];
   state.sectorResults = {};
+  state.scorePosted = false;
+  state.reviewRating = 0;
+  state.pendingReview = null;
   document.body.classList.remove("cheat-sysadmin", "perfect-clear-active");
   const overlay = $("perfectClear");
   if (overlay) {
@@ -955,6 +1121,17 @@ function onAction(action, el) {
     case "start-boss": startBoss(); break;
     case "print": window.print(); break;
     case "restart": restart(); break;
+    case "set-star": setReviewStars(Number(el && el.getAttribute("data-star"))); break;
+    case "submit-review": submitReview(); break;
+    case "open-board":
+      openBoard();
+      break;
+    case "open-reviews":
+      openReviews();
+      break;
+    case "close-lists":
+      closeLists();
+      break;
     case "docs":
       openDocs(el && el.getAttribute("data-docs-section"));
       break;
@@ -963,6 +1140,12 @@ function onAction(action, el) {
       break;
     case "docs-back":
       closeDocs();
+      break;
+    case "quit":
+      quitToMenu();
+      break;
+    case "toggle-fx":
+      toggleReducedFx();
       break;
     default: break;
   }
@@ -1030,6 +1213,11 @@ function bindEvents() {
     if (e.key === "Escape" && state.screen === "docs") {
       e.preventDefault();
       closeDocs();
+      return;
+    }
+    if (e.key === "Escape" && (state.screen === "board" || state.screen === "reviews")) {
+      e.preventDefault();
+      closeLists();
       return;
     }
 
@@ -1154,6 +1342,426 @@ async function fetchText(path) {
   return res.text();
 }
 
+// ——— Placar (Supabase). Sem banco, o jogo segue sem esta função. ———
+
+const FX_KEY = "square-quest-fx";
+
+let supabaseConfig = null;
+let leaderboardReady = Promise.resolve();
+let leaderboardRows = [];
+
+function initReducedFx() {
+  let reduced = false;
+  try {
+    reduced = localStorage.getItem(FX_KEY) === "reduced";
+  } catch (_) {
+    reduced = false;
+  }
+  applyReducedFx(reduced, false);
+}
+
+function applyReducedFx(reduced, announceChange) {
+  document.body.classList.toggle("fx-reduced", reduced);
+  try {
+    localStorage.setItem(FX_KEY, reduced ? "reduced" : "full");
+  } catch (_) {
+    /* storage indisponível */
+  }
+  const btn = $("btnReduceFx");
+  if (btn) {
+    btn.setAttribute("aria-pressed", reduced ? "true" : "false");
+    btn.textContent = reduced ? "Reduzido" : "Efeitos";
+    btn.title = reduced ? "Restaurar animações de fundo" : "Reduzir animações de fundo";
+  }
+  if (announceChange) {
+    announce(reduced ? "Animações de fundo reduzidas." : "Animações de fundo restauradas.");
+  }
+}
+
+function toggleReducedFx() {
+  applyReducedFx(!document.body.classList.contains("fx-reduced"), true);
+}
+
+function disableLeaderboard() {
+  supabaseConfig = null;
+  const box = document.querySelector(".leaderboard");
+  if (box) box.classList.add("hidden");
+}
+
+function showLeaderboardBox() {
+  const box = document.querySelector(".leaderboard");
+  if (box) box.classList.remove("hidden");
+}
+
+function parseEnv(text) {
+  const out = {};
+  String(text || "").split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith("#")) return;
+    const eq = trimmed.indexOf("=");
+    if (eq < 1) return;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    out[key] = value;
+  });
+  return out;
+}
+
+async function readEnvFile(name) {
+  try {
+    const res = await fetch(assetUrl(name), { cache: "no-store" });
+    if (!res.ok) return {};
+    return parseEnv(await res.text());
+  } catch (_) {
+    return {};
+  }
+}
+
+async function loadSupabaseEnv() {
+  const base = await readEnvFile(".env");
+  const local = await readEnvFile(".env.local");
+  const env = { ...base, ...local };
+  const url = String(env.SUPABASE_URL || "").trim().replace(/\/$/, "");
+  const key = String(env.SUPABASE_ANON_KEY || "").trim();
+  if (!url || !key || url.includes("SEU-PROJETO")) return null;
+  return { url, key };
+}
+
+async function supabaseRequest(path, options) {
+  const res = await fetch(`${supabaseConfig.url}/rest/v1/${path}`, {
+    ...options,
+    headers: {
+      apikey: supabaseConfig.key,
+      Authorization: `Bearer ${supabaseConfig.key}`,
+      ...(options && options.headers)
+    }
+  });
+  if (!res.ok) throw new Error(`Supabase HTTP ${res.status}`);
+  return res;
+}
+
+async function queryLeaderboard() {
+  const res = await supabaseRequest(
+    "square_leaderboard?select=team,played_at,score,rating,comment&order=score.desc,played_at.asc",
+    { headers: { Accept: "application/json" } }
+  );
+  const rows = await res.json();
+  return Array.isArray(rows) ? rows : [];
+}
+
+function formatPlayedAt(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
+}
+
+function listShell(kicker, title, body) {
+  return `
+    <p class="eyebrow">${kicker}</p>
+    <h2>${title}</h2>
+    ${body}
+    <div class="actions">
+      <button class="primary" type="button" data-action="close-lists">&gt; VOLTAR</button>
+    </div>`;
+}
+
+function renderBoardList(result) {
+  const host = $("boardScreen");
+  if (!host) return;
+
+  let body;
+  if (!result.ok && result.reason === "off") {
+    body = `<p class="muted">Placar indisponível. O jogo segue sem esta função.</p>`;
+  } else if (!result.ok) {
+    body = `<p class="muted">Não foi possível carregar o placar.</p>`;
+  } else if (!result.rows.length) {
+    body = `<p class="muted">Nenhum registro ainda.</p>`;
+  } else {
+    const top = result.rows.slice(0, 10);
+    body = `<ol class="board-list">${top.map((row, i) => {
+      const rank = String(i + 1).padStart(2, "0");
+      const points = Number(row.score).toLocaleString("pt-BR");
+      const when = formatPlayedAt(row.played_at);
+      return `
+        <li class="board-row">
+          <span class="board-rank">${rank}</span>
+          <div class="board-main">
+            <strong>${escapeHtml(row.team)}</strong>
+            <span class="muted">${escapeHtml(when)} · ${starGlyphs(row.rating)}</span>
+          </div>
+          <span class="board-score">${points} pts</span>
+        </li>`;
+    }).join("")}</ol>`;
+  }
+
+  host.innerHTML = listShell("Placar global", "Top 10", body);
+}
+
+function renderReviewsList(result) {
+  const host = $("reviewsScreen");
+  if (!host) return;
+
+  let body;
+  if (!result.ok && result.reason === "off") {
+    body = `<p class="muted">Avaliações indisponíveis. O jogo segue sem esta função.</p>`;
+  } else if (!result.ok) {
+    body = `<p class="muted">Não foi possível carregar as avaliações.</p>`;
+  } else {
+    const reviews = result.rows
+      .filter((row) => {
+        const stars = Math.round(Number(row.rating) || 0);
+        return stars > 0 || String(row.comment || "").trim().length > 0;
+      })
+      .sort((a, b) => new Date(b.played_at) - new Date(a.played_at));
+
+    if (!reviews.length) {
+      body = `<p class="muted">Nenhuma avaliação ainda.</p>`;
+    } else {
+      body = `<ul class="eval-list">${reviews.map((row) => {
+        const note = String(row.comment || "").trim();
+        const points = Number(row.score).toLocaleString("pt-BR");
+        const when = formatPlayedAt(row.played_at);
+        const comment = note ? `<p class="eval-comment">“${escapeHtml(note)}”</p>` : "";
+        return `
+          <li class="eval-card">
+            <div class="eval-head">
+              <strong>${escapeHtml(row.team)}</strong>
+              <span class="eval-stars" aria-label="${Math.max(0, Math.min(5, Math.round(Number(row.rating) || 0)))} de 5">${starGlyphs(row.rating)}</span>
+            </div>
+            ${comment}
+            <p class="muted">${escapeHtml(when)} · ${points} pts</p>
+          </li>`;
+      }).join("")}</ul>`;
+    }
+  }
+
+  host.innerHTML = listShell("Avaliações", "O que acharam do jogo", body);
+}
+
+async function refreshLeaderboardRows() {
+  try {
+    await leaderboardReady;
+  } catch (_) {
+    return { ok: false, reason: "off", rows: [] };
+  }
+  if (!supabaseConfig) return { ok: false, reason: "off", rows: [] };
+
+  try {
+    leaderboardRows = await queryLeaderboard();
+    renderLeaderboard(leaderboardRows);
+    return { ok: true, rows: leaderboardRows };
+  } catch (err) {
+    console.error(err);
+    return { ok: false, reason: "error", rows: [] };
+  }
+}
+
+async function openBoard() {
+  state.screen = "board";
+  showScreen("boardScreen");
+  updateHeader();
+  const host = $("boardScreen");
+  if (host) host.innerHTML = listShell("Placar global", "Top 10", `<p class="muted">Carregando placar…</p>`);
+  const result = await refreshLeaderboardRows();
+  if (state.screen !== "board") return;
+  renderBoardList(result);
+  announce("Placar global.");
+}
+
+async function openReviews() {
+  state.screen = "reviews";
+  showScreen("reviewsScreen");
+  updateHeader();
+  const host = $("reviewsScreen");
+  if (host) host.innerHTML = listShell("Avaliações", "O que acharam do jogo", `<p class="muted">Carregando avaliações…</p>`);
+  const result = await refreshLeaderboardRows();
+  if (state.screen !== "reviews") return;
+  renderReviewsList(result);
+  announce("Avaliações do jogo.");
+}
+
+function closeLists() {
+  state.screen = "start";
+  showScreen("startScreen");
+  updateHeader();
+}
+
+function pickScrollReviews(rows) {
+  const groups = new Map();
+  rows.forEach((row) => {
+    const stars = Math.max(0, Math.min(5, Math.round(Number(row.rating) || 0)));
+    const note = String(row.comment || "").trim();
+    if (stars <= 0 && !note) return;
+    if (!groups.has(stars)) groups.set(stars, []);
+    groups.get(stars).push(row);
+  });
+
+  const picked = [];
+  for (let stars = 5; stars >= 0 && picked.length < 5; stars -= 1) {
+    const group = groups.get(stars) || [];
+    const room = 5 - picked.length;
+    const chosen = group.length <= room ? group : shuffle(group).slice(0, room);
+    picked.push(...chosen);
+  }
+  return shuffle(picked);
+}
+
+function renderLeaderboard(rows) {
+  const track = $("leaderboardTrack");
+  if (!track) return;
+
+  const picked = pickScrollReviews(rows);
+  if (!picked.length) {
+    track.classList.add("is-static");
+    track.style.animationDuration = "";
+    track.innerHTML = `<span class="leaderboard-item">Nenhuma avaliação ainda</span>`;
+    return;
+  }
+
+  const html = picked.map((row) => {
+    const when = formatPlayedAt(row.played_at);
+    const points = Number(row.score).toLocaleString("pt-BR");
+    const stars = starGlyphs(row.rating);
+    const note = String(row.comment || "").trim();
+    const comment = note ? ` · “${escapeHtml(note)}”` : "";
+    return `<span class="leaderboard-item"><b>${escapeHtml(row.team)}</b> · ${escapeHtml(when)} · ${points} pts · ${stars}${comment}</span>`;
+  }).join("");
+
+  track.classList.remove("is-static");
+  track.style.animationDuration = `${Math.max(16, picked.length * 6)}s`;
+  track.innerHTML = html + html;
+}
+
+function initLeaderboard() {
+  leaderboardReady = (async () => {
+    const config = await loadSupabaseEnv();
+    if (!config) {
+      disableLeaderboard();
+      return;
+    }
+    supabaseConfig = config;
+    leaderboardRows = await queryLeaderboard();
+    showLeaderboardBox();
+    renderLeaderboard(leaderboardRows);
+  })().catch((err) => {
+    console.error(err);
+    disableLeaderboard();
+  });
+}
+
+function starGlyphs(rating) {
+  const n = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+  return `${"★".repeat(n)}${"☆".repeat(5 - n)}`;
+}
+
+function readReviewComment() {
+  const el = $("reviewText");
+  const raw = el ? el.value : "";
+  return Array.from(raw).slice(0, 150).join("").trim();
+}
+
+function bindReviewForm() {
+  const text = $("reviewText");
+  const count = $("reviewCount");
+  if (!text || !count) return;
+  const paint = () => {
+    if (Array.from(text.value).length > 150) {
+      text.value = Array.from(text.value).slice(0, 150).join("");
+    }
+    count.textContent = String(Array.from(text.value).length);
+  };
+  text.addEventListener("input", paint);
+}
+
+function setReviewStars(value) {
+  const picked = Number.isInteger(value) ? value : 0;
+  const next = state.reviewRating === picked ? 0 : Math.max(0, Math.min(5, picked));
+  state.reviewRating = next;
+  document.querySelectorAll("[data-star]").forEach((btn) => {
+    const n = Number(btn.getAttribute("data-star"));
+    const on = next > 0 && n <= next;
+    btn.classList.toggle("is-on", on);
+    btn.textContent = on ? "★" : "☆";
+    btn.setAttribute("aria-checked", n === next ? "true" : "false");
+  });
+  const label = $("starValue");
+  if (label) label.textContent = `${next} de 5`;
+}
+
+function flushUnsentReview() {
+  const pending = state.pendingReview;
+  if (!pending || pending.sent || !supabaseConfig) return;
+  pending.sent = true;
+  saveLeaderboardEntry(pending.team, pending.score, state.reviewRating || 0, readReviewComment());
+}
+
+async function submitReview() {
+  const pending = state.pendingReview;
+  const status = $("reviewStatus");
+  if (!pending || pending.sent) return;
+  if (!supabaseConfig) {
+    if (status) status.textContent = "Placar indisponível. A avaliação não foi registrada.";
+    return;
+  }
+
+  const btn = $("btnSubmitReview");
+  if (btn) btn.disabled = true;
+  const ok = await saveLeaderboardEntry(
+    pending.team,
+    pending.score,
+    state.reviewRating || 0,
+    readReviewComment()
+  );
+  if (ok) {
+    pending.sent = true;
+    if (status) status.textContent = "Avaliação registrada no placar.";
+    const text = $("reviewText");
+    if (text) text.disabled = true;
+    document.querySelectorAll("[data-star]").forEach((star) => { star.disabled = true; });
+    announce("Avaliação registrada.");
+    return;
+  }
+  if (btn) btn.disabled = false;
+  if (status) status.textContent = "Não foi possível registrar a avaliação.";
+}
+
+async function saveLeaderboardEntry(team, score, rating, comment) {
+  try {
+    await leaderboardReady;
+  } catch (_) {
+    return false;
+  }
+  if (!supabaseConfig) return false;
+
+  const name = String(team || "").trim().slice(0, 60) || "Equipe Auditora";
+  const points = Math.round(Number(score));
+  const stars = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+  const note = Array.from(String(comment || "")).slice(0, 150).join("").trim();
+  if (!Number.isFinite(points)) return false;
+
+  try {
+    await supabaseRequest("square_leaderboard", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Prefer: "return=minimal"
+      },
+      body: JSON.stringify({ team: name, score: points, rating: stars, comment: note })
+    });
+    renderLeaderboard(await queryLeaderboard());
+    return true;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
+}
+
 async function init() {
   try {
     const [quizData, docs, readme] = await Promise.all([
@@ -1166,6 +1774,8 @@ async function init() {
     readmeText = readme || "";
     applyMeta(quizData);
     initTheme();
+    initReducedFx();
+    initLeaderboard();
     renderDocsHomeLinks();
     bindEvents();
     updateHeader();
