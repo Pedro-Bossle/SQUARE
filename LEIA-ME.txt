@@ -20,17 +20,6 @@ ESTRUTURA DO JOGO
   README.md                             — readme do repositório GitHub
   .nojekyll                             — garante publicação correta no Pages
 
-COMO PUBLICAR NO GITHUB PAGES
-1. Envie esta pasta para um repositório no GitHub.
-2. Settings → Pages → Branch: main (ou master), pasta / (root).
-3. Abra https://SEU-USUARIO.github.io/NOME-DO-REPO/
-4. O index.html inicia o quiz automaticamente.
-
-COMO JOGAR (LOCAL)
-Na pasta do projeto:
-  python -m http.server 8080
-Abra http://localhost:8080/
-
 Fluxo do jogo:
 - Digite o nome da equipe e clique em "Iniciar auditoria".
 - O jogo percorre as 9 características da ISO/IEC 25010:2023.
@@ -91,8 +80,6 @@ ANTES DE ENTREGAR
 O QUE AINDA NAO FOI VERIFICADO
 - O QR code do PDF não foi testado.
 - Safari, Firefox e um celular de verdade não foram testados.
-- A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras.
-  Vale confirmar com a professora se este tema entra.
 
 OBSERVACAO SOBRE A VERSAO DA NORMA
-A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto e explica a transição a partir da edição 2011 e do conteúdo SQuaRE apresentado no material da disciplina. A entrada deste tema na lista oficial da atividade ainda depende de confirmação da professora.
+A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto e explica a transição a partir da edição 2011 e do conteúdo SQuaRE apresentado no material da disciplina.

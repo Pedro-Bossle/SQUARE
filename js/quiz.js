@@ -818,8 +818,6 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
     <h3>O que ainda não foi verificado</h3>
     <p>
       Não foi possível testar o QR code do PDF, o Safari, o Firefox nem um celular de verdade.
-      A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras.
-      Vale confirmar com a professora se este tema entra.
     </p>
 
     <h3>Revisão dos diagnósticos incorretos</h3>
@@ -1006,13 +1004,12 @@ function renderDocsHomeLinks() {
   const teasers = {
     team: "Integrantes e professora",
     play: "Regras, fluxo e pontuação",
-    pages: "Publicar no GitHub Pages",
     readme: "LEIA-ME.txt completo",
     material: "O que o pacote contém",
     refs: "Fontes normativas"
   };
 
-  const preferred = ["team", "play", "pages", "readme", "material", "refs"];
+  const preferred = ["team", "play", "material", "refs", "readme"];
   const sections = preferred
     .map((id) => docsData.sections.find((s) => s.id === id))
     .filter(Boolean)
@@ -1315,7 +1312,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002";
+const ASSET_VERSION = "20261002b";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });

@@ -48,10 +48,10 @@ Edite `data/quiz-data.json`. O campo `correct` é o índice (começando em 0) da
 
 ## Documentação no app
 
-No quiz, use **Documentação** para abrir a central integrada (equipe, como jogar, material, GitHub Pages, norma, referências e o LEIA-ME completo).
+No quiz, use **Documentação** para abrir a central integrada (equipe, como jogar, material, arquivos, referências e o LEIA-ME completo).
 
 ## Norma
 
 Modelo de qualidade do produto: **ISO/IEC 25010:2023**. Quality-in-use: **ISO/IEC 25019:2023**.
 
-A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras. Vale confirmar com a professora se este tema entra. O QR code do PDF, o Safari, o Firefox e um celular de verdade não foram testados.
+O QR code do PDF, o Safari, o Firefox e um celular de verdade não foram testados.

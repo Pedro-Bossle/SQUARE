@@ -131,48 +131,9 @@
       ]
     },
     {
-      "id": "pages",
-      "label": "GitHub Pages",
-      "icon": "04",
-      "blocks": [
-        {
-          "type": "lead",
-          "text": "O jogo roda em HTTPS no GitHub Pages sem build — só HTML, CSS, JS e JSON."
-        },
-        {
-          "type": "steps",
-          "items": [
-            "Envie esta pasta para um repositório GitHub.",
-            "Em Settings → Pages, escolha Branch: main (ou master) e pasta / (root).",
-            "Aguarde alguns minutos e abra https://SEU-USUARIO.github.io/NOME-DO-REPO/",
-            "O index.html carrega automaticamente o quiz e os dados JSON."
-          ]
-        },
-        {
-          "type": "note",
-          "text": "Localmente: python -m http.server 8080 e abra http://localhost:8080/"
-        }
-      ]
-    },
-    {
-      "id": "norm",
-      "label": "Norma",
-      "icon": "06",
-      "blocks": [
-        {
-          "type": "lead",
-          "text": "A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto."
-        },
-        {
-          "type": "paragraph",
-          "text": "Explica-se a transição a partir da edição 2011 e do conteúdo SQuaRE do material da disciplina. Quality-in-use está em ISO/IEC 25019:2023. Os enunciados do jogo são exemplos educacionais e não reproduzem o texto integral da norma. A lista de temas da atividade não cita a ISO/IEC 25010 nem o SQuaRE com todas as letras; vale confirmar com a professora se este tema entra."
-        }
-      ]
-    },
-    {
       "id": "refs",
       "label": "Referências",
-      "icon": "07",
+      "icon": "04",
       "blocks": [
         {
           "type": "lead",
@@ -187,7 +148,7 @@
     {
       "id": "readme",
       "label": "LEIA-ME",
-      "icon": "08",
+      "icon": "05",
       "blocks": [
         {
           "type": "lead",
