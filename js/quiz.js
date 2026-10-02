@@ -29,7 +29,7 @@ let quizReferences = [];
 let docsData = null;
 let readmeText = "";
 let activeDocsSection = "play";
-let storageKey = "square-quest-v2";
+let storageKey = "square-quest-v3";
 let questionsPerStage = 2;
 let bossQuestionCount = 5;
 let pointsStage = 100;
@@ -271,7 +271,6 @@ function applySaved(saved) {
     lastChoice: Number.isInteger(saved.lastChoice) ? saved.lastChoice : null,
     screen: saved.screen
   });
-  syncCheatMode();
 }
 
 function resumeFromSave() {
@@ -316,28 +315,11 @@ function checkResumeBanner() {
 
 // ——— Fluxo: início ———
 
-function isSysAdminName(name) {
+// Nome reservado: recusado pela policy do placar (supabase/migrations). Não concede nenhuma vantagem no jogo.
+function isReservedTeamName(name) {
   const raw = String(name || "").trim().toLowerCase();
   const compact = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
   return compact === "sysadmin";
-}
-
-function isSysAdmin() {
-  return isSysAdminName(state.team);
-}
-
-function syncCheatMode() {
-  const on = isSysAdmin();
-  document.body.classList.toggle("cheat-sysadmin", on);
-  return on;
-}
-
-function applySysAdminHints() {
-  if (!isSysAdmin()) return;
-  const q = currentQuestion();
-  if (!q) return;
-  const btn = document.querySelector(`.option[data-answer="${q.correct}"]`);
-  if (btn) btn.classList.add("sysadmin-glow");
 }
 
 function startGame() {
@@ -356,10 +338,8 @@ function startGame() {
   state.bossCorrect = 0;
   state.scorePosted = false;
 
-  const cheat = syncCheatMode();
   updateHeader();
   showStageIntro();
-  if (cheat) announce("Modo sysadmin ativo.");
 }
 
 // ——— Fluxo: setores ———
@@ -454,8 +434,6 @@ function showQuestion(restoreAnswered) {
 
   showScreen("questionScreen");
   updateHeader();
-  syncCheatMode();
-  applySysAdminHints();
 
   if (state.answered) {
     paintAnswerState(null, true);
@@ -739,7 +717,7 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
     <div class="print-meta">
       <div><strong>Equipe / jogador:</strong> ${escapeHtml(state.team)}</div>
       <div><strong>Data:</strong> ${escapeHtml(issuedAt)}</div>
-      <div><strong>Professora:</strong> Stefani Mano Valmini</div>
+      <div><strong>Professora:</strong> Stéfani Mano Valmini</div>
       <div><strong>Pontuação máxima:</strong> ${maxScore.toLocaleString("pt-BR")}</div>
     </div>
 
@@ -769,6 +747,9 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
 
     <h3>Revisão dos diagnósticos incorretos</h3>
     <div class="review-list">${review}</div>
+
+    <h3>O que ainda não foi verificado</h3>
+    <p>Não foi possível testar o Safari, o Firefox nem um celular de verdade.</p>
 
     ${reviewEnabled ? `
     <section class="review-form no-print" aria-label="Avaliação do jogo">
@@ -866,7 +847,6 @@ async function showResult() {
   const finishedTeam = state.team;
   const finishedScore = state.score;
   clearProgress();
-  syncCheatMode();
   state.reviewRating = 0;
   state.pendingReview = { team: finishedTeam, score: finishedScore, sent: false };
   try {
@@ -891,7 +871,7 @@ async function showResult() {
     verdict,
     issuedAt,
     perfect,
-    reviewEnabled: !!supabaseConfig && !isSysAdmin()
+    reviewEnabled: !!supabaseConfig && !isReservedTeamName(state.team)
   };
 
   if (perfect) playPerfectClearThenReport(ctx);
@@ -921,7 +901,7 @@ function restart() {
   state.scorePosted = false;
   state.reviewRating = 0;
   state.pendingReview = null;
-  document.body.classList.remove("cheat-sysadmin", "perfect-clear-active");
+  document.body.classList.remove("perfect-clear-active");
   const overlay = $("perfectClear");
   if (overlay) {
     overlay.classList.add("hidden");
@@ -1259,7 +1239,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002f";
+const ASSET_VERSION = "20261002g";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });
@@ -1384,7 +1364,7 @@ async function queryLeaderboard() {
   );
   const rows = await res.json();
   const list = Array.isArray(rows) ? rows : [];
-  return list.filter((row) => !isSysAdminName(row.team));
+  return list.filter((row) => !isReservedTeamName(row.team));
 }
 
 function formatPlayedAt(value) {
@@ -1672,7 +1652,7 @@ async function saveLeaderboardEntry(team, score, rating, comment) {
   if (!supabaseConfig) return false;
 
   const name = String(team || "").trim().slice(0, 60) || "Equipe Auditora";
-  if (isSysAdminName(name)) return false;
+  if (isReservedTeamName(name)) return false;
   const points = Math.round(Number(score));
   const stars = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
   const note = Array.from(String(comment || "")).slice(0, 150).join("").trim();
