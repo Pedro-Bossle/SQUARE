@@ -50,6 +50,8 @@ Edite `data/quiz-data.json`. O campo `correct` é o índice (começando em 0) da
 
 No quiz, use **Documentação** para abrir a central integrada (equipe, como jogar, material, arquivos, referências e o LEIA-ME completo).
 
+A documentação completa (pesquisa, modelo de qualidade, regras, apêndices A e B e referências) está em [documentacao.html](https://pedro-bossle.github.io/SQUARE/documentacao.html).
+
 ## Norma
 
 Modelo de qualidade do produto: **ISO/IEC 25010:2023**. Quality-in-use: **ISO/IEC 25019:2023**.

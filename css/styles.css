@@ -1614,7 +1614,28 @@ footer {
   line-height: 1.3;
 }
 
+a.nav-link { text-decoration: none; display: inline-flex; align-items: center; }
+
 .nav-link:hover { background: var(--chip-bg); color: #fff; border-color: var(--teal); }
+
+a.docs-link.primary {
+  display: inline-block;
+  margin: 8px 0 16px;
+  padding: 12px 14px;
+  border: 2px solid #3d6b3a;
+  background: #1a2a18;
+  color: var(--accent-soft);
+  font-family: var(--pixel);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+a.docs-link.primary:hover {
+  background: #223822;
+  border-color: var(--ok);
+  color: #e8ffe0;
+}
 
 .nav-link[aria-pressed="true"] {
   border-color: var(--teal);

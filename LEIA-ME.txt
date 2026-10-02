@@ -11,8 +11,10 @@ INTEGRANTES
 
 ESTRUTURA DO JOGO
   index.html                            — entrada do GitHub Pages
+  documentacao.html                     — documentação completa (conteúdo do PDF)
   SQUARE_Quiz.html                      — página alternativa do quiz
   css/styles.css                        — estilos da interface
+  css/documentacao.css                  — estilos da documentação
   js/quiz.js                            — lógica do jogo
   data/quiz-data.json                   — características, perguntas e respostas
   data/docs.json                        — documentação exibida na interface
@@ -52,18 +54,13 @@ O QUE O MATERIAL CONTÉM
 - 9 características do modelo de qualidade do produto;
 - 40 subcaracterísticas, com explicações práticas;
 - exemplos de requisitos e formas de verificação;
-- regras, número de jogadores, duração, fluxo e pontuação do jogo;
+- regras, componentes, número de jogadores, fluxo e pontuação do jogo;
 - apêndice A — banco completo de 42 desafios e gabaritos;
 - apêndice B — 9 casos integradores da Auditoria Final;
-- teste do protótipo (registro do teste real);
 - referências bibliográficas (ABNT).
 
 JOGADORES
   Jogadores: 1 jogador ou 1 equipe de 2 a 4 pessoas no mesmo dispositivo, discutindo juntas cada resposta. Para competir, cada jogador ou equipe joga uma partida e compara a pontuação no placar global.
-
-REGISTRO DE TESTE DO PROTÓTIPO
-  Registrado no PDF do trabalho (seção "Teste do protótipo").
-  [PREENCHER com teste real: data, participantes, observações]
 
 O QUE AINDA NÃO FOI VERIFICADO
   - Safari, Firefox e um celular de verdade não foram testados.

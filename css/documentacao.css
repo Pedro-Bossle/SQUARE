@@ -1,0 +1,153 @@
+main {
+  position: relative;
+  z-index: 1;
+}
+
+.doc-article {
+  max-width: 860px;
+  margin: 0 auto;
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.doc-article h1,
+.doc-article h2,
+.doc-article h3 {
+  font-family: var(--display);
+  overflow-wrap: anywhere;
+  line-height: 1.55;
+}
+
+.doc-article p,
+.doc-article li {
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.doc-kicker {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.95rem;
+}
+
+.doc-back {
+  display: inline-block;
+  margin: 4px 0 18px;
+  padding: 12px 14px;
+  border: 2px solid #3d6b3a;
+  background: #1a2a18;
+  color: var(--accent-soft);
+  font-family: var(--pixel);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.doc-back:hover {
+  background: #223822;
+  border-color: var(--ok);
+  color: #e8ffe0;
+}
+
+.doc-toc {
+  margin: 0 0 28px;
+  padding: 14px 16px 8px;
+  border: 2px solid var(--line);
+  background: var(--panel);
+}
+
+.doc-toc ol {
+  margin: 8px 0 10px;
+  padding-left: 1.4rem;
+}
+
+.doc-toc a {
+  color: var(--teal);
+}
+
+.doc-article a {
+  color: var(--teal);
+}
+
+.doc-table-wrap {
+  overflow-x: auto;
+  margin: 0 0 18px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.doc-article table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 16px;
+}
+
+.doc-article th,
+.doc-article td {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.doc-article th {
+  background: var(--panel);
+  font-family: var(--font);
+  font-weight: 600;
+}
+
+.doc-article ol,
+.doc-article ul {
+  margin: 0 0 16px;
+  padding-left: 1.4rem;
+}
+
+@media (max-width: 700px) {
+  .doc-article h2 { font-size: 0.78rem; }
+  .doc-article h3 { font-size: 0.68rem; }
+}
+
+@media print {
+  .fx-bg,
+  .topbar,
+  .doc-back,
+  .doc-toc {
+    display: none !important;
+  }
+
+  html,
+  body,
+  main,
+  .doc-article,
+  .doc-article th,
+  .doc-article td {
+    background: #fff !important;
+    color: #000 !important;
+    box-shadow: none !important;
+  }
+
+  .doc-article,
+  .doc-article p,
+  .doc-article li,
+  .doc-article h1,
+  .doc-article h2,
+  .doc-article h3,
+  .doc-article a,
+  .doc-article th,
+  .doc-article td,
+  footer,
+  footer p {
+    color: #000 !important;
+  }
+
+  .doc-article a {
+    text-decoration: underline;
+  }
+
+  .doc-article th,
+  .doc-article td {
+    border-color: #000 !important;
+  }
+}

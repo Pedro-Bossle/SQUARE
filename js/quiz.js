@@ -131,7 +131,6 @@ function sealLabel(index, done) {
   return `
     <div class="seal ${done ? "done" : ""}">
       <strong>${String(index + 1).padStart(2, "0")} · ${c.pt}</strong>
-      <span class="muted">${c.en}</span>
     </div>`;
 }
 
@@ -173,7 +172,7 @@ function renderSectorMap() {
     const num = String(i + 1).padStart(2, "0");
     const short = sectorShortLabel(c);
     return `
-      <div class="${cls}" title="${c.pt} (${c.en})" aria-label="${c.pt}">
+      <div class="${cls}" title="${c.pt}" aria-label="${c.pt}">
         <span class="sector-seg-num">${num}</span>
         <span class="sector-seg-label">${short}</span>
       </div>`;
@@ -361,7 +360,6 @@ function showStageIntro() {
       <div>
         <p class="eyebrow" style="margin:0">SETOR DE AUDITORIA</p>
         <h2 style="margin:4px 0 8px">${c.pt}</h2>
-        <p class="muted" style="margin:0">${c.en}</p>
       </div>
     </div>
     <p>${c.definition}</p>
@@ -777,7 +775,7 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
     </div>
     <p class="muted no-print" style="margin-top:14px">
       Pontuação máxima: ${maxScore.toLocaleString("pt-BR")} pontos
-      (setores: ${stageTotal} × ${pointsStage} · auditoria final: ${bossQuestionCount} × ${pointsBoss}).
+      (questões: ${stageTotal} × ${pointsStage} · auditoria final: ${bossQuestionCount} × ${pointsBoss}).
       Use Imprimir e escolha “Salvar como PDF”.
     </p>
 
@@ -973,6 +971,8 @@ function renderBlock(block) {
     case "refs":
       return `<ul class="docs-list">${quizReferences.map((r) => `<li>${escapeHtml(r)}</li>`).join("")}</ul>
         <p class="muted">Nota: enunciados e explicações são exemplos educacionais e não reproduzem o texto integral da norma.</p>`;
+    case "link":
+      return `<p><a class="docs-link primary" href="${escapeHtml(block.href)}">${escapeHtml(block.text)}</a></p>`;
     case "readme":
       return `<pre class="docs-readme" tabindex="0">${escapeHtml(readmeText || "LEIA-ME.txt indisponível.")}</pre>`;
     default:
@@ -1239,7 +1239,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002g";
+const ASSET_VERSION = "20261002i";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });

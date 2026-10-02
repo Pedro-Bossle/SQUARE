@@ -52,7 +52,7 @@
           "type": "kpis",
           "items": [
             { "value": "2.800", "label": "pontos máx." },
-            { "value": "18×100", "label": "setores" },
+            { "value": "18×100", "label": "questões" },
             { "value": "5×200", "label": "auditoria final" },
             { "value": "9", "label": "características" }
           ]
@@ -73,6 +73,11 @@
           "text": "Conteúdo acadêmico alinhado à disciplina Qualidade e Auditoria de TI."
         },
         {
+          "type": "link",
+          "text": "> ABRIR A DOCUMENTAÇÃO COMPLETA",
+          "href": "documentacao.html"
+        },
+        {
           "type": "list",
           "items": [
             "Origem e evolução da família SQuaRE",
@@ -81,20 +86,15 @@
             "9 características do modelo de qualidade do produto",
             "40 subcaracterísticas, com explicações práticas",
             "Exemplos de requisitos e formas de verificação",
-            "Regras, número de jogadores, duração, fluxo e pontuação do jogo",
+            "Regras, componentes, número de jogadores, fluxo e pontuação do jogo",
             "Apêndice A — banco completo de 42 desafios e gabaritos",
             "Apêndice B — 9 casos integradores da Auditoria Final",
-            "Teste do protótipo (registro do teste real)",
             "Referências bibliográficas (ABNT)"
           ]
         },
         {
           "type": "paragraph",
           "text": "Jogadores: 1 jogador ou 1 equipe de 2 a 4 pessoas no mesmo dispositivo, discutindo juntas cada resposta. Para competir, cada jogador ou equipe joga uma partida e compara a pontuação no placar global."
-        },
-        {
-          "type": "note",
-          "text": "Teste do protótipo: registrado no PDF do trabalho (seção Teste do protótipo). [PREENCHER com teste real: data, participantes, observações]"
         }
       ]
     },
@@ -141,6 +141,7 @@
           "type": "files",
           "items": [
             { "path": "index.html", "desc": "Entrada do GitHub Pages (quiz)" },
+            { "path": "documentacao.html", "desc": "Documentação completa (conteúdo do PDF)" },
             { "path": "SQUARE_Quiz.html", "desc": "Página alternativa do quiz" },
             { "path": "css/styles.css", "desc": "Estilos da interface" },
             { "path": "js/quiz.js", "desc": "Lógica do jogo" },
