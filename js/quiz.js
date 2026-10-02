@@ -691,33 +691,6 @@ function weakSectors() {
     .map((c) => c.pt);
 }
 
-const TEAM = [
-  "Pedro Bossle Sandi",
-  "Carla Regina Hentschel",
-  "Valdomiro Rehbein Junior"
-];
-
-const PLAYTEST = [
-  {
-    who: "Pedro Bossle Sandi",
-    date: "18/09/2026",
-    what: "Partida completa nos nove setores",
-    result: "Concluiu a auditoria e conferiu a pontuação no relatório."
-  },
-  {
-    who: "Carla Regina Hentschel",
-    date: "19/09/2026",
-    what: "Impressão do relatório em PDF",
-    result: "O PDF trouxe os 3 jogadores e este registro de teste."
-  },
-  {
-    who: "Valdomiro Rehbein Junior",
-    date: "20/09/2026",
-    what: "Setor de Compatibilidade em duas partidas",
-    result: "As questões sorteadas não se repetiram iguais nas duas rodadas."
-  }
-];
-
 function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfect, reviewEnabled }) {
   const seals = characteristics.map((c) => {
     const r = state.sectorResults[c.id] || { correct: 0, total: questionsPerStage };
@@ -768,7 +741,6 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
       <div><strong>Data:</strong> ${escapeHtml(issuedAt)}</div>
       <div><strong>Professora:</strong> Stefani Mano Valmini</div>
       <div><strong>Pontuação máxima:</strong> ${maxScore.toLocaleString("pt-BR")}</div>
-      <div><strong>Jogadores:</strong> ${TEAM.length}</div>
     </div>
 
     <p class="eyebrow">Relatório final</p>
@@ -794,30 +766,6 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
 
     <h3>Desempenho por setor</h3>
     <div class="seal-grid">${seals}</div>
-
-    <h3>Jogadores</h3>
-    <p>Participam <strong>${TEAM.length}</strong> jogadores: ${TEAM.map(escapeHtml).join(", ")}.</p>
-
-    <h3>Registro de teste com colegas</h3>
-    <table class="playtest-table">
-      <thead>
-        <tr>
-          <th>Colega</th>
-          <th>Data</th>
-          <th>O que foi testado</th>
-          <th>Registro</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${PLAYTEST.map((row) => `
-          <tr>
-            <td>${escapeHtml(row.who)}</td>
-            <td>${escapeHtml(row.date)}</td>
-            <td>${escapeHtml(row.what)}</td>
-            <td>${escapeHtml(row.result)}</td>
-          </tr>`).join("")}
-      </tbody>
-    </table>
 
     <h3>Revisão dos diagnósticos incorretos</h3>
     <div class="review-list">${review}</div>
@@ -1311,7 +1259,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002e";
+const ASSET_VERSION = "20261002f";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });
