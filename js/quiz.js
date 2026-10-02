@@ -1315,14 +1315,16 @@ function showLoadError(err) {
     </section>`;
 }
 
+const ASSET_VERSION = "20261002";
+
 async function fetchJson(path) {
-  const res = await fetch(assetUrl(path));
+  const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`HTTP ${res.status} ao buscar ${path}`);
   return res.json();
 }
 
 async function fetchText(path) {
-  const res = await fetch(assetUrl(path));
+  const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`HTTP ${res.status} ao buscar ${path}`);
   return res.text();
 }
