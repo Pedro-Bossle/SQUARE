@@ -2,7 +2,7 @@ PACOTE DA ATIVIDADE - SQuaRE QUEST / ISO/IEC 25010:2023
 
 DISCIPLINA
   Qualidade e Auditoria de Tecnologia da Informação — 2026/02
-  Professora: Stefani Mano Valmini
+  Professora: Stéfani Mano Valmini
 
 INTEGRANTES
   Pedro Bossle Sandi
@@ -45,26 +45,25 @@ O campo "correct" é o índice da alternativa certa em "options"
 A documentação da interface fica em data/docs.json e também pode ser
 lida neste LEIA-ME pela aba "LEIA-ME" dentro do próprio quiz.
 
-O QUE O MATERIAL CONTEM
+O QUE O MATERIAL CONTÉM
 - origem e evolução da família SQuaRE;
 - estrutura da família ISO/IEC 25000;
 - atualização ISO/IEC 25010:2011 x ISO/IEC 25010:2023;
 - 9 características do modelo de qualidade do produto;
 - 40 subcaracterísticas, com explicações práticas;
 - exemplos de requisitos e formas de verificação;
-- regras, participantes, duração, fluxo e pontuação do jogo;
-- banco completo de 42 desafios e gabaritos;
-- 9 casos integradores da Auditoria Final;
-- referências bibliográficas;
-- ficha para teste do protótipo.
+- regras, número de jogadores, duração, fluxo e pontuação do jogo;
+- apêndice A — banco completo de 42 desafios e gabaritos;
+- apêndice B — 9 casos integradores da Auditoria Final;
+- teste do protótipo (registro do teste real);
+- referências bibliográficas (ABNT).
 
 JOGADORES
-  Participam 3 jogadores, os integrantes listados acima.
+  Jogadores: 1 jogador ou 1 equipe de 2 a 4 pessoas no mesmo dispositivo, discutindo juntas cada resposta. Para competir, cada jogador ou equipe joga uma partida e compara a pontuação no placar global.
 
-REGISTRO DE TESTE COM COLEGAS
-  18/09/2026 — Pedro Bossle Sandi — partida completa nos nove setores.
-    Concluiu a auditoria e conferiu a pontuação no relatório.
-  19/09/2026 — Carla Regina Hentschel — impressão do relatório em PDF.
-    Conferiu a impressão do relatório.
-  20/09/2026 — Valdomiro Rehbein Junior — Compatibilidade em duas partidas.
-    As questões sorteadas não se repetiram iguais nas duas rodadas.
+REGISTRO DE TESTE DO PROTÓTIPO
+  Registrado no PDF do trabalho (seção "Teste do protótipo").
+  [PREENCHER com teste real: data, participantes, observações]
+
+O QUE AINDA NÃO FOI VERIFICADO
+  - Safari, Firefox e um celular de verdade não foram testados.

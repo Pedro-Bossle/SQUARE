@@ -13,7 +13,7 @@
         },
         {
           "type": "paragraph",
-          "text": "Professora: Stefani Mano Valmini"
+          "text": "Professora: Stéfani Mano Valmini"
         },
         {
           "type": "list",
@@ -81,23 +81,20 @@
             "9 características do modelo de qualidade do produto",
             "40 subcaracterísticas, com explicações práticas",
             "Exemplos de requisitos e formas de verificação",
-            "Regras, participantes, duração, fluxo e pontuação do jogo",
-            "Banco completo de 42 desafios e gabaritos",
-            "9 casos integradores da Auditoria Final",
-            "Referências bibliográficas e ficha de teste do protótipo"
+            "Regras, número de jogadores, duração, fluxo e pontuação do jogo",
+            "Apêndice A — banco completo de 42 desafios e gabaritos",
+            "Apêndice B — 9 casos integradores da Auditoria Final",
+            "Teste do protótipo (registro do teste real)",
+            "Referências bibliográficas (ABNT)"
           ]
         },
         {
           "type": "paragraph",
-          "text": "Participam 3 jogadores: Pedro Bossle Sandi, Carla Regina Hentschel e Valdomiro Rehbein Junior."
+          "text": "Jogadores: 1 jogador ou 1 equipe de 2 a 4 pessoas no mesmo dispositivo, discutindo juntas cada resposta. Para competir, cada jogador ou equipe joga uma partida e compara a pontuação no placar global."
         },
         {
-          "type": "list",
-          "items": [
-            "18/09/2026 — Pedro Bossle Sandi: partida completa nos nove setores. Concluiu a auditoria e conferiu a pontuação no relatório.",
-            "19/09/2026 — Carla Regina Hentschel: impressão do relatório em PDF. Conferiu a impressão do relatório.",
-            "20/09/2026 — Valdomiro Rehbein Junior: setor de Compatibilidade em duas partidas. As questões sorteadas não se repetiram iguais."
-          ]
+          "type": "note",
+          "text": "Teste do protótipo: registrado no PDF do trabalho (seção Teste do protótipo). [PREENCHER com teste real: data, participantes, observações]"
         }
       ]
     },

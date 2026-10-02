@@ -5,7 +5,7 @@ Jogo educacional de auditoria de qualidade de software baseado na **ISO/IEC 2501
 ## Equipe
 
 **Disciplina:** Qualidade e Auditoria de Tecnologia da Informação — 2026/02  
-**Professora:** Stefani Mano Valmini
+**Professora:** Stéfani Mano Valmini
 
 **Integrantes:**
 - Pedro Bossle Sandi
