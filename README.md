@@ -9,8 +9,6 @@ Jogo educacional de auditoria de qualidade de software baseado na **ISO/IEC 2501
 
 **Integrantes:**
 - Pedro Bossle Sandi
-- Rafael Guarese Sasseti
-- Arthur Leonardo Oliveira de Matos
 - Carla Regina Hentschel
 - Valdomiro Rehbein Junior
 

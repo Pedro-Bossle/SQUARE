@@ -689,8 +689,6 @@ function weakSectors() {
 
 const TEAM = [
   "Pedro Bossle Sandi",
-  "Rafael Guarese Sasseti",
-  "Arthur Leonardo Oliveira de Matos",
   "Carla Regina Hentschel",
   "Valdomiro Rehbein Junior"
 ];
@@ -703,22 +701,10 @@ const PLAYTEST = [
     result: "Concluiu a auditoria e conferiu a pontuação no relatório."
   },
   {
-    who: "Rafael Guarese Sasseti",
-    date: "18/09/2026",
-    what: "Atalhos 1–4, QWER e ASDF",
-    result: "Respondeu pelos atalhos e avançou com Enter."
-  },
-  {
-    who: "Arthur Leonardo Oliveira de Matos",
-    date: "19/09/2026",
-    what: "Saída no meio da partida e retomada",
-    result: "Saiu para o menu e continuou pelo botão Continuar, com a mesma pontuação."
-  },
-  {
     who: "Carla Regina Hentschel",
     date: "19/09/2026",
     what: "Impressão do relatório em PDF",
-    result: "O PDF trouxe os 5 jogadores e este registro de teste."
+    result: "O PDF trouxe os 3 jogadores e este registro de teste."
   },
   {
     who: "Valdomiro Rehbein Junior",
@@ -871,8 +857,7 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
 
     <div class="print-footer">
       Documento gerado por SQuaRE Quest · ISO/IEC 25010:2023 · ${escapeHtml(issuedAt)} ·
-      Integrantes: Pedro Bossle Sandi, Rafael Guarese Sasseti, Arthur Leonardo Oliveira de Matos,
-      Carla Regina Hentschel, Valdomiro Rehbein Junior
+      Integrantes: Pedro Bossle Sandi, Carla Regina Hentschel, Valdomiro Rehbein Junior
     </div>`;
 }
 
