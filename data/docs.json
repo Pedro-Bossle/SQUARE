@@ -103,9 +103,39 @@
       ]
     },
     {
+      "id": "refs",
+      "label": "Referências",
+      "icon": "03",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Fontes normativas e de apoio usadas no pacote."
+        },
+        {
+          "type": "refs",
+          "source": "quiz"
+        }
+      ]
+    },
+    {
+      "id": "readme",
+      "label": "LEIA-ME",
+      "icon": "04",
+      "blocks": [
+        {
+          "type": "lead",
+          "text": "Conteúdo integral do LEIA-ME.txt do pacote."
+        },
+        {
+          "type": "readme",
+          "source": "LEIA-ME.txt"
+        }
+      ]
+    },
+    {
       "id": "files",
       "label": "Arquivos",
-      "icon": "03",
+      "icon": "05",
       "blocks": [
         {
           "type": "lead",
@@ -127,36 +157,6 @@
         {
           "type": "note",
           "text": "Para editar questões, altere data/quiz-data.json. O campo correct é o índice (0-based) da alternativa certa em options."
-        }
-      ]
-    },
-    {
-      "id": "refs",
-      "label": "Referências",
-      "icon": "04",
-      "blocks": [
-        {
-          "type": "lead",
-          "text": "Fontes normativas e de apoio usadas no pacote."
-        },
-        {
-          "type": "refs",
-          "source": "quiz"
-        }
-      ]
-    },
-    {
-      "id": "readme",
-      "label": "LEIA-ME",
-      "icon": "05",
-      "blocks": [
-        {
-          "type": "lead",
-          "text": "Conteúdo integral do LEIA-ME.txt do pacote."
-        },
-        {
-          "type": "readme",
-          "source": "LEIA-ME.txt"
         }
       ]
     }
