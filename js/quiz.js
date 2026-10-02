@@ -270,6 +270,7 @@ function applySaved(saved) {
     lastChoice: Number.isInteger(saved.lastChoice) ? saved.lastChoice : null,
     screen: saved.screen
   });
+  syncCheatMode();
 }
 
 function resumeFromSave() {
@@ -314,11 +315,25 @@ function checkResumeBanner() {
 
 // ——— Fluxo: início ———
 
-// Nome reservado: recusado pela policy do placar (supabase/migrations). Não concede nenhuma vantagem no jogo.
+// Nome reservado: recusado pela policy do placar (supabase/migrations).
 function isReservedTeamName(name) {
   const raw = String(name || "").trim().toLowerCase();
   const compact = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
   return compact === "sysadmin";
+}
+
+function syncCheatMode() {
+  const on = isReservedTeamName(state.team);
+  document.body.classList.toggle("cheat-sysadmin", on);
+  return on;
+}
+
+function applySysAdminHints() {
+  if (!isReservedTeamName(state.team)) return;
+  const q = currentQuestion();
+  if (!q) return;
+  const btn = document.querySelector(`.option[data-answer="${q.correct}"]`);
+  if (btn) btn.classList.add("sysadmin-glow");
 }
 
 function startGame() {
@@ -337,8 +352,10 @@ function startGame() {
   state.bossCorrect = 0;
   state.scorePosted = false;
 
+  const cheat = syncCheatMode();
   updateHeader();
   showStageIntro();
+  if (cheat) announce("Modo sysadmin ativo.");
 }
 
 // ——— Fluxo: setores ———
@@ -432,6 +449,8 @@ function showQuestion(restoreAnswered) {
 
   showScreen("questionScreen");
   updateHeader();
+  syncCheatMode();
+  applySysAdminHints();
 
   if (state.answered) {
     paintAnswerState(null, true);
@@ -845,6 +864,7 @@ async function showResult() {
   const finishedTeam = state.team;
   const finishedScore = state.score;
   clearProgress();
+  syncCheatMode();
   state.reviewRating = 0;
   state.pendingReview = { team: finishedTeam, score: finishedScore, sent: false };
   try {
@@ -899,7 +919,7 @@ function restart() {
   state.scorePosted = false;
   state.reviewRating = 0;
   state.pendingReview = null;
-  document.body.classList.remove("perfect-clear-active");
+  document.body.classList.remove("cheat-sysadmin", "perfect-clear-active");
   const overlay = $("perfectClear");
   if (overlay) {
     overlay.classList.add("hidden");
@@ -1239,7 +1259,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002i";
+const ASSET_VERSION = "20261002j";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });

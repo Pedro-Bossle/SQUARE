@@ -1440,6 +1440,24 @@ button.ghost {
   color: var(--ok);
 }
 
+body.cheat-sysadmin .option.sysadmin-glow,
+body.cheat-sysadmin .option.correct {
+  border-color: #6ecf62 !important;
+  box-shadow:
+    0 0 0 2px rgba(110, 207, 98, 0.95),
+    0 0 14px rgba(110, 207, 98, 0.7),
+    0 0 28px rgba(110, 207, 98, 0.4);
+  background: color-mix(in srgb, var(--ok-bg) 70%, #1a3a22);
+}
+
+body.cheat-sysadmin .option.sysadmin-glow:not(.correct):not(.wrong) {
+  color: #b8f0a8;
+}
+
+body.cheat-sysadmin .option.sysadmin-glow .key {
+  color: #6ecf62;
+}
+
 .option.wrong {
   background: var(--bad-bg);
   border-color: #6b3d3d;
