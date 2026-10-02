@@ -1316,7 +1316,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002c";
+const ASSET_VERSION = "20261002d";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });

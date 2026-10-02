@@ -56,8 +56,7 @@ O QUE O MATERIAL CONTEM
 - banco completo de 42 desafios e gabaritos;
 - 9 casos integradores da Auditoria Final;
 - referências bibliográficas;
-- ficha para teste do protótipo;
-- roteiro para os 2 comentários exigidos no fórum.
+- ficha para teste do protótipo.
 
 JOGADORES
   Participam 3 jogadores, os integrantes listados acima.
