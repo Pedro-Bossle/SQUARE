@@ -316,10 +316,14 @@ function checkResumeBanner() {
 
 // ——— Fluxo: início ———
 
-function isSysAdmin() {
-  const raw = (state.team || "").trim().toLowerCase();
+function isSysAdminName(name) {
+  const raw = String(name || "").trim().toLowerCase();
   const compact = raw.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
   return compact === "sysadmin";
+}
+
+function isSysAdmin() {
+  return isSysAdminName(state.team);
 }
 
 function syncCheatMode() {
@@ -944,7 +948,7 @@ async function showResult() {
     verdict,
     issuedAt,
     perfect,
-    reviewEnabled: !!supabaseConfig
+    reviewEnabled: !!supabaseConfig && !isSysAdmin()
   };
 
   if (perfect) playPerfectClearThenReport(ctx);
@@ -1436,7 +1440,8 @@ async function queryLeaderboard() {
     { headers: { Accept: "application/json" } }
   );
   const rows = await res.json();
-  return Array.isArray(rows) ? rows : [];
+  const list = Array.isArray(rows) ? rows : [];
+  return list.filter((row) => !isSysAdminName(row.team));
 }
 
 function formatPlayedAt(value) {
@@ -1724,6 +1729,7 @@ async function saveLeaderboardEntry(team, score, rating, comment) {
   if (!supabaseConfig) return false;
 
   const name = String(team || "").trim().slice(0, 60) || "Equipe Auditora";
+  if (isSysAdminName(name)) return false;
   const points = Math.round(Number(score));
   const stars = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
   const note = Array.from(String(comment || "")).slice(0, 150).join("").trim();
