@@ -70,15 +70,3 @@ REGISTRO DE TESTE COM COLEGAS
     O PDF trouxe os 3 jogadores e este registro de teste.
   20/09/2026 — Valdomiro Rehbein Junior — Compatibilidade em duas partidas.
     As questões sorteadas não se repetiram iguais nas duas rodadas.
-
-ANTES DE ENTREGAR
-- Nomes dos integrantes e curso já registrados neste pacote (capa / README / docs).
-- O playtest com colegas está registrado neste arquivo e no PDF do relatório final.
-- Depois que os jogos forem publicados no fórum, jogar e comentar pelo menos 2 trabalhos para obter os 0,5 ponto previstos na atividade.
-
-O QUE AINDA NAO FOI VERIFICADO
-- O QR code do PDF não foi testado.
-- Safari, Firefox e um celular de verdade não foram testados.
-
-OBSERVACAO SOBRE A VERSAO DA NORMA
-A pesquisa usa a edição atual ISO/IEC 25010:2023 para o modelo de qualidade do produto e explica a transição a partir da edição 2011 e do conteúdo SQuaRE apresentado no material da disciplina.

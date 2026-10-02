@@ -53,5 +53,3 @@ No quiz, use **Documentação** para abrir a central integrada (equipe, como jog
 ## Norma
 
 Modelo de qualidade do produto: **ISO/IEC 25010:2023**. Quality-in-use: **ISO/IEC 25019:2023**.
-
-O QR code do PDF, o Safari, o Firefox e um celular de verdade não foram testados.

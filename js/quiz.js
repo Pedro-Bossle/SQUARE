@@ -819,11 +819,6 @@ function buildFinalReportHtml({ pct, weak, stageTotal, verdict, issuedAt, perfec
       </tbody>
     </table>
 
-    <h3>O que ainda não foi verificado</h3>
-    <p>
-      Não foi possível testar o QR code do PDF, o Safari, o Firefox nem um celular de verdade.
-    </p>
-
     <h3>Revisão dos diagnósticos incorretos</h3>
     <div class="review-list">${review}</div>
 
@@ -1316,7 +1311,7 @@ function showLoadError(err) {
     </section>`;
 }
 
-const ASSET_VERSION = "20261002d";
+const ASSET_VERSION = "20261002e";
 
 async function fetchJson(path) {
   const res = await fetch(`${assetUrl(path)}?v=${ASSET_VERSION}`, { cache: "no-store" });
