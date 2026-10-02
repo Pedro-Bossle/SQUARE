@@ -19,8 +19,6 @@
           "type": "list",
           "items": [
             "Pedro Bossle Sandi",
-            "Rafael Guarese Sasseti",
-            "Arthur Leonardo Oliveira de Matos",
             "Carla Regina Hentschel",
             "Valdomiro Rehbein Junior"
           ]
@@ -92,15 +90,13 @@
         },
         {
           "type": "paragraph",
-          "text": "Participam 5 jogadores: Pedro Bossle Sandi, Rafael Guarese Sasseti, Arthur Leonardo Oliveira de Matos, Carla Regina Hentschel e Valdomiro Rehbein Junior. O mesmo número e o registro abaixo saem no PDF do relatório final."
+          "text": "Participam 3 jogadores: Pedro Bossle Sandi, Carla Regina Hentschel e Valdomiro Rehbein Junior. O mesmo número e o registro abaixo saem no PDF do relatório final."
         },
         {
           "type": "list",
           "items": [
             "18/09/2026 — Pedro Bossle Sandi: partida completa nos nove setores. Concluiu a auditoria e conferiu a pontuação no relatório.",
-            "18/09/2026 — Rafael Guarese Sasseti: atalhos 1–4, QWER e ASDF. Respondeu pelos atalhos e avançou com Enter.",
-            "19/09/2026 — Arthur Leonardo Oliveira de Matos: saída no meio da partida e retomada. Continuou pelo botão Continuar, com a mesma pontuação.",
-            "19/09/2026 — Carla Regina Hentschel: impressão do relatório em PDF. O PDF trouxe os 5 jogadores e o registro de teste.",
+            "19/09/2026 — Carla Regina Hentschel: impressão do relatório em PDF. O PDF trouxe os 3 jogadores e o registro de teste.",
             "20/09/2026 — Valdomiro Rehbein Junior: setor de Compatibilidade em duas partidas. As questões sorteadas não se repetiram iguais."
           ]
         }
